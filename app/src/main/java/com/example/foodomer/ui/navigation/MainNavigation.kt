@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.foodomer.ui.screens.HomeScreen
 import com.example.foodomer.ui.screens.WelcomeScreen
 
 @Composable
@@ -14,5 +15,6 @@ fun MainNavigation() {
         startDestination = "welcome"
     ) {
         composable("welcome") { WelcomeScreen(navController) }
+        composable("home") { HomeScreen(navController) }
     }
 }

@@ -2,6 +2,7 @@ package com.example.foodomer.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.foodomer.utils.now
 
 @Entity(tableName = "foods")
 data class Food(
@@ -10,6 +11,6 @@ data class Food(
     val name: String,
     val price: Int,
     val img: String,
-    val createdAt: Long,
+    val createdAt: Long = now().time,
     val updatedAt: Long? = null
 )

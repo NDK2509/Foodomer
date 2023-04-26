@@ -6,11 +6,18 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.foodomer.MainApplication
 import com.example.foodomer.ui.viewmodels.HomeViewModel
+import com.example.foodomer.ui.viewmodels.RandomizerViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
             HomeViewModel(
+                getApplication().container.taskRepository
+            )
+        }
+
+        initializer {
+            RandomizerViewModel(
                 getApplication().container.taskRepository
             )
         }

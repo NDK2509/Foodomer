@@ -40,7 +40,9 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
-                FoodomerButton{}
+                FoodomerButton{
+                    navController?.navigate("randomizer")
+                }
             }
         },
         backgroundColor = Color.White,

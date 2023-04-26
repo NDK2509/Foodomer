@@ -1,8 +1,8 @@
 package com.example.foodomer.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.example.foodomer.database.repositories.TaskRepository
+import com.example.foodomer.database.repositories.FoodRepository
 
-class HomeViewModel(val taskRepository: TaskRepository): ViewModel() {
-    val foodList = taskRepository.getAll()
+class HomeViewModel(val foodRepository: FoodRepository): ViewModel() {
+    val foodList = foodRepository.getAll()
 }

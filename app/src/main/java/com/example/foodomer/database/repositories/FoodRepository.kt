@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class TaskRepository(
+class FoodRepository(
     private val foodDAO: FoodDAO, private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 ) {
     fun getAll(): Flow<List<Food>> = foodDAO.getAll()

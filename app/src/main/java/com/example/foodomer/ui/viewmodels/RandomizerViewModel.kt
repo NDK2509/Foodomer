@@ -3,14 +3,14 @@ package com.example.foodomer.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodomer.database.entities.Food
-import com.example.foodomer.database.repositories.TaskRepository
+import com.example.foodomer.database.repositories.FoodRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-class RandomizerViewModel(val taskRepository: TaskRepository) : ViewModel() {
+class RandomizerViewModel(val foodRepository: FoodRepository) : ViewModel() {
     private var _chosenFood = MutableStateFlow<Food?>(null)
-    private val _foodList = taskRepository.getAll()
+    private val _foodList = foodRepository.getAll()
 
     val chosenFood: StateFlow<Food?> = _chosenFood.asStateFlow()
     fun randomFood() {

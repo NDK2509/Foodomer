@@ -12,13 +12,13 @@ object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
             HomeViewModel(
-                getApplication().container.taskRepository
+                getApplication().container.foodRepository
             )
         }
 
         initializer {
             RandomizerViewModel(
-                getApplication().container.taskRepository
+                getApplication().container.foodRepository
             )
         }
     }

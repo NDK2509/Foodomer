@@ -33,7 +33,14 @@ fun HomeScreen(
     val foods by viewModel.foodList.collectAsState(initial = emptyList())
     Scaffold(
         floatingActionButtonPosition = FabPosition.End,
-        floatingActionButton = { AddNewFoodButton(onClickToClose = {}, onClickToOpen = {}) },
+        floatingActionButton = {
+            AddNewFoodButton(
+                onClickToClose = {},
+                onClickToOpen = {
+                    navController?.navigate("create-category")
+                }
+            )
+        },
         isFloatingActionButtonDocked = true,
         bottomBar = {
             Row(

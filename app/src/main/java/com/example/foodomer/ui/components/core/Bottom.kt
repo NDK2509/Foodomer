@@ -32,22 +32,22 @@ fun FoodomerButton(
 ) {
     Box(
         modifier =
-        Modifier
-            .width(100.dp)
-            .aspectRatio(1f)
-            .background(OrangePrimary, CircleShape)
-            .clickable {
-                onClick()
-            }
+            Modifier
+                .width(100.dp)
+                .aspectRatio(1f)
+                .background(OrangePrimary, CircleShape)
+                .clickable {
+                    onClick()
+                }
     ) {
         Image(
             painterResource(R.drawable.lid_and_dish_close),
             "",
             modifier =
-            Modifier
-                .width(100.dp)
-                .aspectRatio(1f)
-                .flipInfinite(duration = 1500)
+                Modifier
+                    .width(100.dp)
+                    .aspectRatio(1f)
+                    .flipInfinite(duration = 1500)
         )
     }
 }
@@ -60,24 +60,24 @@ fun AddNewFoodButton(
 
     Box(
         modifier =
-        Modifier
-            .width(50.dp)
-            .aspectRatio(1f)
-            .clip(CircleShape)
-            .background(OrangePrimary, CircleShape)
+            Modifier
+                .width(50.dp)
+                .aspectRatio(1f)
+                .clip(CircleShape)
+                .background(OrangePrimary, CircleShape)
     ) {
         Icon(Icons.Rounded.Add,
             "",
             tint = Color.White,
             modifier =
-            Modifier
-                .rotateWithAnimation(if (_isOpen) 45f else 0f, 300)
-                .width(50.dp).aspectRatio(1f)
-                .semantics { role = Role.Button }
-                .clickable {
-                    if (_isOpen) onClickToClose() else onClickToOpen()
-                    _isOpen = !_isOpen
-                })
+                Modifier
+                    .rotateWithAnimation(if (_isOpen) 45f else 0f, 300)
+                    .width(50.dp).aspectRatio(1f)
+                    .semantics { role = Role.Button }
+                    .clickable {
+                        if (_isOpen) onClickToClose() else onClickToOpen()
+                        _isOpen = !_isOpen
+                    })
     }
 }
 

@@ -41,7 +41,17 @@ fun CreateCategoryScreen(
         modifier = Modifier.fillMaxSize().padding(top = DEFAULT_PADDING),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(end = DEFAULT_PADDING),
+            horizontalArrangement = Arrangement.End
+        ) {
+            CloseButton(onClick = {
+                navController?.navigate("home")
+            })
+        }
         Image(
             painterResource(R.drawable.banner_2), "", modifier = Modifier.width(500.dp).aspectRatio(1f)
         )
@@ -77,14 +87,6 @@ fun CreateCategoryScreen(
                     Toast.makeText(context, "There are some errors occurred!", Toast.LENGTH_SHORT).show()
                 }
 
-            })
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
-        ) {
-            CloseButton(onClick = {
-                navController?.navigate("home")
             })
         }
     }

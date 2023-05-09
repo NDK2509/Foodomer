@@ -38,3 +38,24 @@ fun Modifier.flipInfinite(duration: Int = 500, delay: Int = 200): Modifier = com
         rotationY = rotation
     }
 }
+
+fun Modifier.blink(duration: Int = 500, delay: Int = 0): Modifier = composed {
+    val infiniteTransition = rememberInfiniteTransition()
+    val opacity by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = duration,
+                delayMillis = delay,
+                easing = FastOutSlowInEasing,
+            ),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
+    this.graphicsLayer {
+        alpha = opacity
+    }
+}
+

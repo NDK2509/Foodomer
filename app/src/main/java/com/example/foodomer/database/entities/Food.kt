@@ -26,6 +26,7 @@ data class Food(
     val name: String,
     val price: Int,
     val img: String,
+    val description: String,
     @ColumnInfo(name = "created_at")
     val createdAt: Long = now().time,
     @ColumnInfo(name = "updated_at")

@@ -1,4 +1,4 @@
-package com.example.foodomer.ui.navigation
+package com.example.foodomer.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost

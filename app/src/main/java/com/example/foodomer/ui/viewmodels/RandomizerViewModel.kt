@@ -8,14 +8,15 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-class RandomizerViewModel(val foodRepository: FoodRepository) : ViewModel() {
+class RandomizerViewModel(foodRepository: FoodRepository) : ViewModel() {
     private var _chosenFood = MutableStateFlow<Food?>(null)
-    private val _foodList = foodRepository.getAll()
 
+    val foodList = foodRepository.getAll()
     val chosenFood: StateFlow<Food?> = _chosenFood.asStateFlow()
+
     fun randomFood() {
         viewModelScope.launch {
-            val foods = _foodList.first()
+            val foods = foodList.first()
             val numOfFoods = foods.size
             _chosenFood.update {
                 val food = foods[Random.nextInt(0, numOfFoods)]

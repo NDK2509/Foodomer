@@ -11,12 +11,12 @@ fun MainNavigation() {
     val navController = rememberNavController()
     NavHost(
         navController,
-        startDestination = "home"
+        startDestination = Destinations.Home.route
     ) {
-        composable("welcome") { WelcomeScreen(navController) }
-        composable("home") { HomeScreen(navController) }
-        composable("randomizer") { RandomizerScreen(navController) }
-        composable("create-category") { CreateCategoryScreen(navController) }
-        composable("create-food") { CreateFoodScreen(navController) }
+        composable(Destinations.Welcome.route) { WelcomeScreen(navController) }
+        composable(Destinations.Home.route) { HomeScreen(navController) }
+        composable(Destinations.Randomizer.route) { RandomizerScreen(navController) }
+        composable(Destinations.CreateCategory.route) { CreateCategoryScreen(navController) }
+        composable(Destinations.CreateFood.route) { CreateFoodScreen(navController) }
     }
 }

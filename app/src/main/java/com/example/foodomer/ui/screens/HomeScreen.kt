@@ -15,7 +15,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.foodomer.R
 import com.example.foodomer.ui.AppViewModelProvider
-import com.example.foodomer.ui.components.core.Header
+import com.example.foodomer.ui.components.core.HeaderBar
 import com.example.foodomer.ui.components.home.HorizontalFoodList
 import com.example.foodomer.ui.components.welcome.AbsoluteRow
 import com.example.foodomer.ui.theme.DEFAULT_PADDING
@@ -36,6 +36,7 @@ fun HomeScreen(
         permissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
+    HeaderBar(navController)
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -46,7 +47,6 @@ fun HomeScreen(
             Box(
                 modifier = Modifier.fillMaxHeight(0.3f)
             ) {
-                Header(onClickMenu = {}, onCLickSearch = {})
                 AbsoluteRow(
                     offsetY = DEFAULT_PADDING, horizontalArrangement = Arrangement.Center
                 ) {

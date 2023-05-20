@@ -10,4 +10,5 @@ sealed class Destinations(val route: String, vararg params: String) {
     object Randomizer: Destinations("Randomizer")
     object CreateCategory: Destinations("Create-category")
     object CreateFood: Destinations("Create-food")
+    object History: Destinations("History")
 }

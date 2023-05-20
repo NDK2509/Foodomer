@@ -1,11 +1,13 @@
 package com.example.foodomer.utils
 
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.Dp
 
 fun Modifier.rotateWithAnimation(degTo: Float, duration: Int = 1000, easing: Easing = FastOutLinearInEasing): Modifier = composed {
     val rotateState by animateFloatAsState(
@@ -59,3 +61,13 @@ fun Modifier.blink(duration: Int = 500, delay: Int = 0): Modifier = composed {
     }
 }
 
+fun Modifier.slideByOffsetX(offsetXTo: Dp, duration: Int = 500, easing: Easing = FastOutLinearInEasing) = composed{
+    val offsetX by animateDpAsState(
+        targetValue = offsetXTo,
+        animationSpec = tween(
+            durationMillis = duration,
+            easing = easing
+        )
+    )
+    this.offset(x = offsetX)
+}

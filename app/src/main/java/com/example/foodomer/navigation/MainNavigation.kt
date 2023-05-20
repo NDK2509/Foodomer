@@ -1,7 +1,11 @@
 package com.example.foodomer.navigation
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.compose.NavHost
@@ -11,6 +15,7 @@ import com.example.foodomer.R
 import com.example.foodomer.ui.components.core.BottomBar
 import com.example.foodomer.ui.components.core.BottomBarItemProps
 import com.example.foodomer.ui.screens.*
+import com.example.foodomer.ui.theme.DEFAULT_PADDING
 
 @Composable
 fun MainNavigation() {
@@ -34,15 +39,19 @@ fun MainNavigation() {
         },
         backgroundColor = Color.White
     ) { _ ->
-        NavHost(
-            navController,
-            startDestination = Destinations.Home.route
+        Column (
+            modifier = Modifier.fillMaxSize().padding(DEFAULT_PADDING)
         ) {
-            composable(Destinations.Welcome.route) { WelcomeScreen(navController) }
-            composable(Destinations.Home.route) { HomeScreen(navController) }
-            composable(Destinations.Randomizer.route) { RandomizerScreen(navController) }
-            composable(Destinations.CreateCategory.route) { CreateCategoryScreen(navController) }
-            composable(Destinations.CreateFood.route) { CreateFoodScreen(navController) }
+            NavHost(
+                navController,
+                startDestination = Destinations.Home.route
+            ) {
+                composable(Destinations.Welcome.route) { WelcomeScreen(navController) }
+                composable(Destinations.Home.route) { HomeScreen(navController) }
+                composable(Destinations.Randomizer.route) { RandomizerScreen(navController) }
+                composable(Destinations.CreateCategory.route) { CreateCategoryScreen(navController) }
+                composable(Destinations.CreateFood.route) { CreateFoodScreen(navController) }
+            }
         }
     }
 }

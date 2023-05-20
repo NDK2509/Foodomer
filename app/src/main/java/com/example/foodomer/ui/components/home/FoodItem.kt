@@ -16,10 +16,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.foodomer.FakeData.fakeFood
 import com.example.foodomer.database.entities.Food
 import com.example.foodomer.ui.theme.OrangePrimary
 
@@ -51,10 +49,4 @@ fun FoodItem(
         Spacer(Modifier.height(5.dp))
         Text(food.name, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold, color = OrangePrimary)
     }
-}
-
-@Preview
-@Composable
-fun PreviewFoodItem() {
-    FoodItem(food = fakeFood)
 }

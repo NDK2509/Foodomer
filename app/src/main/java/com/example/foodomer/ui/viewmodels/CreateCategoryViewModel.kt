@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 class CreateCategoryViewModel(val categoryRepository: CategoryRepository): ViewModel() {
     fun save(name: String) {
         viewModelScope.launch {
-            categoryRepository.insert(Category(name = name))
+            categoryRepository.insert(Category(name = name, description = ""))
         }
     }
 }

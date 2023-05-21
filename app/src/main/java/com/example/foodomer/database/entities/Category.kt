@@ -10,6 +10,7 @@ data class Category(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val name: String,
+    val description: String,
     @ColumnInfo(name = "created_at")
     val createdAt: Long = now().time,
     @ColumnInfo(name = "updated_at")

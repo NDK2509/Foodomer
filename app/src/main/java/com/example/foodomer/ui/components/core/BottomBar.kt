@@ -36,7 +36,7 @@ fun BottomBarIndicator(
 ) {
 
     Column(
-        modifier = Modifier.padding(8.dp).width(width + 8.dp).zIndex(1f).slideByOffsetX(offsetX, duration = 200)
+        modifier = Modifier.padding(vertical = 8.dp).width(width).zIndex(1f).slideByOffsetX(offsetX, duration = 200)
 
     ) {
         Column(
@@ -68,12 +68,11 @@ fun BottomBar(
     navController: NavController, items: List<BottomBarItemProps>
 ) {
     val numOfItems = items.size
-    val bottomBarWidth = (getScreenWidth() * 0.9).toInt()
-    val indicatorWidth = (bottomBarWidth / (numOfItems + 1))
-    val indicatorPositionUnit = ((bottomBarWidth - indicatorWidth) / numOfItems).dp
+    val bottomBarWidth = (getScreenWidth() * 0.9).toInt() + 1
+    val indicatorWidth = (bottomBarWidth / (numOfItems + 0.5)) + 1
 
     var currentIndex by remember { mutableStateOf(0) }
-    var indicatorPosition by remember { mutableStateOf(0.dp) }
+    var indicatorPosition by remember { mutableStateOf(8.dp) }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -85,19 +84,23 @@ fun BottomBar(
             Modifier
                 .fillMaxWidth(0.9f)
                 .height(64.dp)
-                .padding(4.dp)
+                .padding(vertical = 4.dp)
                 .clip(CircleShape)
                 .background(BlackPrimary)
         ) {
             BottomBarIndicator(
                 width = indicatorWidth.dp, offsetX = indicatorPosition
             )
+
+            val iconsPadding = indicatorWidth / 2 + 8 - ICON_SIZE.value / 2
+            val indicatorPositionUnit = ((bottomBarWidth - 2 * iconsPadding - ICON_SIZE.value) / (numOfItems - 1)).dp
+
             Row(
                 modifier =
                 Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .padding(horizontal = (indicatorWidth / 2 - 8).dp)
+                    .padding(horizontal = iconsPadding.dp)
                     .zIndex(2f),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -107,13 +110,13 @@ fun BottomBar(
                         props = it,
                         onClick = {
                             if (idx > currentIndex) {
-                                indicatorPosition += (indicatorPositionUnit + 24.dp) * (idx - currentIndex)
+                                indicatorPosition += (indicatorPositionUnit) * (idx - currentIndex)
                             } else if (idx < currentIndex) {
-                                indicatorPosition -= (indicatorPositionUnit + 24.dp) * (currentIndex - idx)
+                                indicatorPosition -= (indicatorPositionUnit) * (currentIndex - idx)
                             }
 
                             currentIndex = idx
-                            navController.navigate(it.destination)
+//                            navController.navigate(it.destination)
                         },
                         isActive = idx == currentIndex
                     )

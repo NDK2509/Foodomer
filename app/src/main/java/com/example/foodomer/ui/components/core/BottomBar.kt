@@ -116,7 +116,7 @@ fun BottomBar(
                             }
 
                             currentIndex = idx
-//                            navController.navigate(it.destination)
+                            navController.navigate(it.destination)
                         },
                         isActive = idx == currentIndex
                     )

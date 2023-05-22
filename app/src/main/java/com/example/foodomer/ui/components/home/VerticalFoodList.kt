@@ -20,7 +20,7 @@ fun VerticalFoodList(
     Column(
         modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp)
     ) {
-        ListTitle("FOODS", onClick = onTitleClick, onAddClick = onAddClick)
+        ListTitle("Foods", onClick = onTitleClick, onAddClick = onAddClick)
         VerticalScrollList {
             items.map {
                 FoodItem(it, onClick = { onItemClick(it) })

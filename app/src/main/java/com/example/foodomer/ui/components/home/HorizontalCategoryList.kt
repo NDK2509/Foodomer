@@ -18,7 +18,7 @@ fun HorizontalCategoryList(
     Column(
         modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp)
     ) {
-        ListTitle("CATEGORIES", onAddClick = onAddClick)
+        ListTitle("Categories", onAddClick = onAddClick)
         HorizontalScrollList {
             items.map {
                 CategoryItem(it, onClick = { onItemClick(it) })

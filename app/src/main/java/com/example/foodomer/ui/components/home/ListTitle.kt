@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -66,16 +67,16 @@ fun ListTitle(
             verticalAlignment = Alignment.Bottom,
             horizontalArrangement = Arrangement.spacedBy(5.dp),
             modifier =
-            Modifier
-                .padding(vertical = 10.dp)
-                .clickable { onClick() }
-                .semantics { Role.Button },
+                Modifier
+                    .padding(vertical = 10.dp)
+                    .clickable { onClick() }
+                    .semantics { Role.Button },
         ) {
-            Text(label, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = OrangePrimary)
+            Text(label, fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, color = Color.Black)
             Icon(
                 iconPainter,
                 "",
-                tint = OrangePrimary,
+                tint = Color.Black,
                 modifier = Modifier.width(20.dp).aspectRatio(1f)
             )
         }

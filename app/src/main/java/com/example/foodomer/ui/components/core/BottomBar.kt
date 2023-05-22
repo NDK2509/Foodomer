@@ -1,5 +1,9 @@
 package com.example.foodomer.ui.components.core
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -63,9 +67,12 @@ fun BottomBarItem(
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BottomBar(
-    navController: NavController, items: List<BottomBarItemProps>
+    navController: NavController,
+    items: List<BottomBarItemProps>,
+    isShown: Boolean = true
 ) {
     val numOfItems = items.size
     val bottomBarWidth = (getScreenWidth() * 0.9).toInt() + 1
@@ -74,52 +81,58 @@ fun BottomBar(
     var currentIndex by remember { mutableStateOf(0) }
     var indicatorPosition by remember { mutableStateOf(8.dp) }
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+    AnimatedVisibility(
+        isShown,
+        enter = scaleIn(),
+        exit = scaleOut()
     ) {
-        Box(
-            modifier =
-            Modifier
-                .fillMaxWidth(0.9f)
-                .height(64.dp)
-                .padding(vertical = 4.dp)
-                .clip(CircleShape)
-                .background(BlackPrimary)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            BottomBarIndicator(
-                width = indicatorWidth.dp, offsetX = indicatorPosition
-            )
-
-            val iconsPadding = indicatorWidth / 2 + 8 - ICON_SIZE.value / 2
-            val indicatorPositionUnit = ((bottomBarWidth - 2 * iconsPadding - ICON_SIZE.value) / (numOfItems - 1)).dp
-
-            Row(
+            Box(
                 modifier =
                 Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .padding(horizontal = iconsPadding.dp)
-                    .zIndex(2f),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .fillMaxWidth(0.9f)
+                    .height(64.dp)
+                    .padding(vertical = 4.dp)
+                    .clip(CircleShape)
+                    .background(BlackPrimary)
             ) {
-                items.forEachIndexed { idx, it ->
-                    BottomBarItem(
-                        props = it,
-                        onClick = {
-                            if (idx > currentIndex) {
-                                indicatorPosition += (indicatorPositionUnit) * (idx - currentIndex)
-                            } else if (idx < currentIndex) {
-                                indicatorPosition -= (indicatorPositionUnit) * (currentIndex - idx)
-                            }
+                BottomBarIndicator(
+                    width = indicatorWidth.dp, offsetX = indicatorPosition
+                )
 
-                            currentIndex = idx
-                            navController.navigate(it.destination)
-                        },
-                        isActive = idx == currentIndex
-                    )
+                val iconsPadding = indicatorWidth / 2 + 8 - ICON_SIZE.value / 2
+                val indicatorPositionUnit = ((bottomBarWidth - 2 * iconsPadding - ICON_SIZE.value) / (numOfItems - 1)).dp
+
+                Row(
+                    modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .padding(horizontal = iconsPadding.dp)
+                        .zIndex(2f),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    items.forEachIndexed { idx, it ->
+                        BottomBarItem(
+                            props = it,
+                            onClick = {
+                                if (idx > currentIndex) {
+                                    indicatorPosition += (indicatorPositionUnit) * (idx - currentIndex)
+                                } else if (idx < currentIndex) {
+                                    indicatorPosition -= (indicatorPositionUnit) * (currentIndex - idx)
+                                }
+
+                                currentIndex = idx
+                                navController.navigate(it.destination)
+                            },
+                            isActive = idx == currentIndex
+                        )
+                    }
                 }
             }
         }

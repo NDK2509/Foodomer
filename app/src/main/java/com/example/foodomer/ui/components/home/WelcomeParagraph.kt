@@ -19,7 +19,7 @@ fun WelcomeParagraph(
     Column {
         Row(
            modifier = Modifier.padding(start = 10.dp)
-        ) { Text("Hi,", color = OrangePrimary, fontWeight = FontWeight.Bold, fontSize = fontSizeLarge) }
+        ) { Text("Hi,", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = fontSizeLarge) }
         Row(
             modifier = Modifier.padding(start = 40.dp)
         ) { Text(username, color = OrangePrimary, fontWeight = FontWeight.Bold, fontSize = fontSizeLarge) }

@@ -1,11 +1,12 @@
 package com.example.foodomer.ui.screens
 
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,13 +21,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.foodomer.R
 import com.example.foodomer.ui.AppViewModelProvider
-import com.example.foodomer.ui.components.core.CloseButton
+import com.example.foodomer.ui.components.core.AbsoluteCircle
 import com.example.foodomer.ui.components.core.CommonButton
 import com.example.foodomer.ui.components.core.CommonTextInput
-import com.example.foodomer.ui.theme.DEFAULT_PADDING
+import com.example.foodomer.ui.components.core.HeaderBar
+import com.example.foodomer.ui.components.createcategory.CreateCategoryTitleParagraph
 import com.example.foodomer.ui.theme.OrangePrimary
 import com.example.foodomer.ui.viewmodels.CreateCategoryViewModel
-import com.example.foodomer.utils.capitalize
+import com.example.foodomer.utils.getScreenHeight
+import com.example.foodomer.utils.getScreenWidth
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
@@ -34,41 +37,56 @@ fun CreateCategoryScreen(
     navController: NavController? = null,
     viewModel: CreateCategoryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val screenWidth = getScreenWidth()
+    val screenHeight = getScreenHeight()
+    val inputLabelFontSize = 16.sp
     val context = LocalContext.current
-    var name by remember { mutableStateOf("") }
+    val uiState by viewModel.uiSate.collectAsState()
 
-    Column(
-        modifier = Modifier.fillMaxSize().padding(top = DEFAULT_PADDING),
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Box(
+        modifier = Modifier.fillMaxSize()
     ) {
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(end = DEFAULT_PADDING),
-            horizontalArrangement = Arrangement.End
-        ) {
-            CloseButton(onClick = {
-                navController?.navigate("home")
-            })
-        }
-        Image(
-            painterResource(R.drawable.banner_2), "", modifier = Modifier.width(500.dp).aspectRatio(1f)
+        AbsoluteCircle(145.dp, offsetX = (screenWidth - 145 - 20).dp, offsetY = (-97).dp)
+        AbsoluteCircle(90.dp, offsetX = (-150).dp, offsetY = 75.dp, OrangePrimary)
+        AbsoluteCircle(103.dp, offsetX = (screenWidth - 103).dp, offsetY = (screenHeight * 0.6).dp, OrangePrimary)
+        AbsoluteCircle(153.dp, offsetX = (-134).dp, offsetY = (screenHeight * 0.7).dp)
+    }
+    Column(
+        Modifier.fillMaxSize()
+    ) {
+        HeaderBar(navController, showBackButton = true)
+        Spacer(Modifier.height((screenHeight*0.15).dp))
+
+        CreateCategoryTitleParagraph()
+        Spacer(Modifier.height((screenHeight*0.1).dp))
+
+        Text("What will the category be called?", color = OrangePrimary, fontSize = inputLabelFontSize, fontWeight = FontWeight.Bold)
+        Spacer(Modifier.height(10.dp))
+        CommonTextInput(
+            uiState.name,
+            onChange = viewModel::setName,
+            placeholder = {
+                Text("Type the category name...", color = Color.Gray)
+            }
+        )
+        Spacer(Modifier.height(50.dp))
+
+        Text("Some description right there!", color = OrangePrimary, fontSize = inputLabelFontSize, fontWeight = FontWeight.Bold)
+        Spacer(Modifier.height(10.dp))
+        CommonTextInput(
+            uiState.description,
+            onChange = viewModel::setDescription,
+            placeholder = {
+                Text("Description about the category...", color = Color.Gray)
+            },
+            minLines = 5,
+            maxLines = 5
         )
 
-        Text("Add a new Food Category", color = OrangePrimary, fontSize = 30.sp, fontWeight = FontWeight.Bold)
-
         Row(
-            modifier = Modifier.fillMaxHeight(0.5f).padding(horizontal = DEFAULT_PADDING),
+            modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
-        ) {
-            CommonTextInput(name, onChange = { name = it }, placeholder = {
-                Text("Type the category name...", color = Color.Gray)
-            })
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.6f), horizontalArrangement = Arrangement.Center
         ) {
             CommonButton(label = "Save", textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold), icon = {
                 Icon(
@@ -78,15 +96,16 @@ fun CreateCategoryScreen(
                     tint = Color.White
                 )
             }, onClick = {
-                val formattedName = name.trim().capitalize()
-                try {
-                    viewModel.save(formattedName)
-                    navController?.navigate("home")
-                    Toast.makeText(context, "You have just added $formattedName category!", Toast.LENGTH_SHORT).show()
-                } catch (exception: Exception) {
-                    Toast.makeText(context, "There are some errors occurred!", Toast.LENGTH_SHORT).show()
-                }
-
+                    try {
+                        if (viewModel.save()) {
+                            navController?.navigate("home")
+                            Toast.makeText(context, "You have just added '${uiState.name}' category!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Please fill all of fields above!", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (exception: Exception) {
+                        Toast.makeText(context, "There are some errors occurred!", Toast.LENGTH_SHORT).show()
+                    }
             })
         }
     }

@@ -5,11 +5,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.foodomer.R
 import com.example.foodomer.ui.components.core.BottomBar
@@ -20,6 +25,18 @@ import com.example.foodomer.ui.theme.DEFAULT_PADDING
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+    var isBottomBarShown by rememberSaveable { (mutableStateOf(false)) }
+
+    isBottomBarShown = when (navBackStackEntry?.destination?.route) {
+        Destinations.CreateCategory.route, Destinations.CreateFood.route -> {
+            false
+        }
+        else -> {
+            true
+        }
+    }
     Scaffold(
         bottomBar = {
             BottomBar(
@@ -34,7 +51,8 @@ fun MainNavigation() {
                     BottomBarItemProps(
                         icon = painterResource(R.drawable.icon_clock), destination = Destinations.History.route
                     )
-                )
+                ),
+                isShown = isBottomBarShown
             )
         },
         backgroundColor = Color.White

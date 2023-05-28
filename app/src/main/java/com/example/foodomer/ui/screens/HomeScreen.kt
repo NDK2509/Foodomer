@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -30,7 +30,7 @@ fun HomeScreen(
         ActivityResultContracts.RequestPermission()
     ) {}
 
-    SideEffect {
+    LaunchedEffect(null){
         permissionLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
         permissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
@@ -41,6 +41,7 @@ fun HomeScreen(
     Column {
         HeaderBar(navController)
         Spacer(Modifier.height(20.dp))
+
         WelcomeParagraph("Nguyen Dang Ky")
         HorizontalCategoryList(
             items = categories,

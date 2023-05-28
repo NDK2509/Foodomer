@@ -12,7 +12,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -59,9 +58,9 @@ fun MainNavigation() {
         },
         backgroundColor = Color.White
     ) { paddingValues ->
-        val bottomPadding = paddingValues.calculateBottomPadding() - 20.dp
+        val bottomPadding = paddingValues.calculateBottomPadding()
         Column (
-            modifier = Modifier.fillMaxSize().padding(start = DEFAULT_PADDING, top = DEFAULT_PADDING, end = DEFAULT_PADDING, bottom = if (bottomPadding > 0.dp) bottomPadding else 0.dp)
+            modifier = Modifier.fillMaxSize().padding(start = DEFAULT_PADDING, top = DEFAULT_PADDING, end = DEFAULT_PADDING, bottom = bottomPadding)
         ) {
             NavHost(
                 navController,

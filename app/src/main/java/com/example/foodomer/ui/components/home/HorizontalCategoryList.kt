@@ -1,8 +1,6 @@
 package com.example.foodomer.ui.components.home
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -19,6 +17,7 @@ fun HorizontalCategoryList(
         modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp)
     ) {
         ListTitle("Categories", onAddClick = onAddClick)
+        Spacer(Modifier.height(10.dp))
         HorizontalScrollList {
             items.map {
                 CategoryItem(it, onClick = { onItemClick(it) })

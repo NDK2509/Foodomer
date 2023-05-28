@@ -1,8 +1,9 @@
 package com.example.foodomer.ui.components.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,9 +19,10 @@ fun VerticalFoodList(
     onAddClick: () -> Unit = {}
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp)
+        modifier = Modifier.fillMaxWidth()
     ) {
         ListTitle("Foods", onClick = onTitleClick, onAddClick = onAddClick)
+        Spacer(Modifier.height(10.dp))
         VerticalScrollList {
             items.map {
                 FoodItem(it, onClick = { onItemClick(it) })

@@ -20,6 +20,13 @@ import androidx.compose.ui.unit.sp
 import com.example.foodomer.R
 import com.example.foodomer.database.entities.Category
 import com.example.foodomer.ui.theme.OrangePrimary
+import kotlin.random.Random
+
+private val categoryImages = intArrayOf(R.drawable.category_illu_1, R.drawable.category_illu_2, R.drawable.category_illu_3, R.drawable.category_illu_4, R.drawable.category_illu_5)
+private val arrLen = categoryImages.size
+private fun randomCategoryIllustration(): Int {
+    return categoryImages[Random.nextInt(arrLen)]
+}
 
 @Composable
 fun CategoryItem(
@@ -42,7 +49,7 @@ fun CategoryItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = painterResource(R.drawable.ribs_dish),
+            painter = painterResource(randomCategoryIllustration()),
             "",
             modifier = Modifier.fillMaxWidth(0.5f)
         )

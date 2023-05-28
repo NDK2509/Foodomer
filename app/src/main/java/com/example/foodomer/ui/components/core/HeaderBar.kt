@@ -9,6 +9,7 @@ import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,11 +25,12 @@ val ICON_SIZE = 40.dp
 fun HeaderBar(
     navController: NavController? = null,
     showBackButton: Boolean = false,
+    iconColor: Color = OrangePrimary,
     leftItems: @Composable () -> Unit = {
         Icon(
             painterResource(R.drawable.icon_settings),
             "",
-            tint = OrangePrimary,
+            tint = iconColor,
             modifier =
                 Modifier
                     .width(ICON_SIZE)
@@ -42,7 +44,7 @@ fun HeaderBar(
         Icon(
             painterResource(R.drawable.icon_search),
             "",
-            tint = OrangePrimary,
+            tint = iconColor,
             modifier =
                 Modifier
                     .width(ICON_SIZE)
@@ -61,7 +63,7 @@ fun HeaderBar(
             Icon(
                 painterResource(R.drawable.icon_angle_left),
                 "",
-                tint = OrangePrimary,
+                tint = iconColor,
                 modifier =
                     Modifier
                         .width(ICON_SIZE)

@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -92,7 +93,8 @@ fun FoodItem(
                     .width(65.dp)
                     .aspectRatio(1f)
                     .clip(CircleShape)
-                    .border(1.dp, OrangePrimary, CircleShape)
+                    .border(1.dp, OrangePrimary, CircleShape),
+            contentScale = ContentScale.Crop
         )
         Column(
             modifier = Modifier.fillMaxWidth(0.5f),

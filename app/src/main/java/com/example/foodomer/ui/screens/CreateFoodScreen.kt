@@ -186,7 +186,7 @@ fun CreateFoodScreen(
         HeaderBar(
             navController,
             showBackButton = true,
-            iconColor = Color.White
+            iconColor = OrangePrimary
         )
         Column(
             modifier = Modifier.fillMaxSize(),

@@ -22,6 +22,7 @@ fun HorizontalCategoryList(
             items.map {
                 CategoryItem(it, onClick = { onItemClick(it) })
             }
+            Spacer(Modifier.width(0.5f.dp))
         }
     }
 }

@@ -12,6 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -27,7 +28,7 @@ fun MainNavigation() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
 
-    var isBottomBarShown by rememberSaveable { (mutableStateOf(false)) }
+    var isBottomBarShown by rememberSaveable { mutableStateOf(false) }
 
     isBottomBarShown = when (navBackStackEntry?.destination?.route) {
         Destinations.CreateCategory.route, Destinations.CreateFood.route -> {
@@ -37,6 +38,7 @@ fun MainNavigation() {
             true
         }
     }
+
     Scaffold(
         bottomBar = {
             BottomBar(
@@ -56,9 +58,10 @@ fun MainNavigation() {
             )
         },
         backgroundColor = Color.White
-    ) { _ ->
+    ) { paddingValues ->
+        val bottomPadding = paddingValues.calculateBottomPadding() - 20.dp
         Column (
-            modifier = Modifier.fillMaxSize().padding(DEFAULT_PADDING)
+            modifier = Modifier.fillMaxSize().padding(start = DEFAULT_PADDING, top = DEFAULT_PADDING, end = DEFAULT_PADDING, bottom = if (bottomPadding > 0.dp) bottomPadding else 0.dp)
         ) {
             NavHost(
                 navController,

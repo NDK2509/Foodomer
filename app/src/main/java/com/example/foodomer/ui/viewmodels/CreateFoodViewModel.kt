@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.foodomer.database.entities.Food
 import com.example.foodomer.database.repositories.CategoryRepository
 import com.example.foodomer.database.repositories.FoodRepository
+import com.example.foodomer.utils.capitalize
 import com.example.foodomer.utils.saveUriIntoExternalStorage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -46,19 +47,36 @@ class CreateFoodViewModel(
         _imgUri.value = uri
     }
 
-    fun saveFood(context: Context) {
+    fun saveFood(context: Context): Boolean {
+        var result = true
         viewModelScope.launch {
-            val foodState = uiState.value
-            val img = saveUriIntoExternalStorage(context, _imgUri.value!!)
-            foodRepository.insert(
-                Food(
-                    name = foodState.name,
-                    categoryId = foodState.categoryId!!,
-                    price = foodState.price.toInt(),
-                    description = foodState.description,
-                    img = img
+            if (validate()) {
+                val foodState = uiState.value
+                val img = saveUriIntoExternalStorage(context, _imgUri.value!!)
+                foodRepository.insert(
+                    Food(
+                        name = foodState.name,
+                        categoryId = foodState.categoryId!!,
+                        price = foodState.price.toInt(),
+                        description = foodState.description,
+                        img = img
+                    )
                 )
-            )
+            } else {
+                result = false
+            }
         }
+
+        return result
+    }
+
+    private fun validate(): Boolean {
+        val foodState = uiState.value
+        val name = foodState.name.trim()
+        val price = foodState.price.replace(" ", "")
+        val description = foodState.description.trim()
+
+        _uiState.value = _uiState.value.copy(name = name.capitalize(), price = price, description = description)
+        return !(name == "" || price == "" || description == "" || imgUri.value == null)
     }
 }

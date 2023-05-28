@@ -1,6 +1,9 @@
 package com.example.foodomer.ui.components.core
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -22,19 +25,21 @@ fun CommonButton(
     textStyle: TextStyle = LocalTextStyle.current,
     onClick: () -> Unit = {},
     label: String = "",
-    icon: @Composable () -> Unit = {}
+    icon: @Composable () -> Unit = {},
+    reversedColor: Boolean = false
 ) {
+
     Button(
         onClick,
         modifier = modifier.width(250.dp).padding(10.dp),
         shape = CircleShape,
-        colors = ButtonDefaults.buttonColors(backgroundColor = OrangePrimary)
+        colors = ButtonDefaults.buttonColors(backgroundColor = if (reversedColor) Color.White else OrangePrimary)
     ) {
         Box(
             modifier.fillMaxWidth(),
             contentAlignment = Alignment.CenterStart
         ) {
-            Text(label, modifier = textModifier.fillMaxWidth(), textAlign = TextAlign.Center, color = Color.White, style = textStyle)
+            Text(label, modifier = textModifier.fillMaxWidth(), textAlign = TextAlign.Center, color = if (reversedColor) OrangePrimary else Color.White, style = textStyle)
             Box(
                 modifier.fillMaxWidth(),
                 contentAlignment = Alignment.CenterEnd

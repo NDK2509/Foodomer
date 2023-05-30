@@ -9,9 +9,9 @@ import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class RandomizerViewModel(foodRepository: FoodRepository) : ViewModel() {
-    private var _chosenFood = MutableStateFlow<Food?>(null)
-
     val foodList = foodRepository.getAll()
+
+    private var _chosenFood = MutableStateFlow<Food?>(null)
     val chosenFood: StateFlow<Food?> = _chosenFood.asStateFlow()
 
     fun randomFood() {

@@ -1,5 +1,6 @@
 package com.example.foodomer.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -7,6 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,6 +30,9 @@ fun RandomizerScreen(
 ) {
     val foodList by viewModel.foodList.collectAsState(emptyList())
     val chosenFood by viewModel.chosenFood.collectAsState()
+    val randomizingFood by viewModel.randomizingFood.collectAsState()
+    val isRandomizing by viewModel.isRandomizing
+    val context = LocalContext.current
 
     if (foodList.isNotEmpty()) {
         Column(
@@ -43,8 +48,8 @@ fun RandomizerScreen(
             RandomizerTab()
             Spacer(Modifier.height(50.dp))
 
-            FoodImageFrame(chosenFood?.img ?: foodList[0].img)
-            RandomResultParagraph(chosenFood?.name)
+            FoodImageFrame(randomizingFood?.img ?: foodList[0].img)
+            RandomResultParagraph(if (isRandomizing) null else chosenFood?.name)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -52,7 +57,12 @@ fun RandomizerScreen(
             ) {
                 DiceButton(
                     onClick = {
-                        viewModel.randomFood()
+                        if (!isRandomizing) {
+                            viewModel.randomFood()
+                        }
+                        else {
+                            Toast.makeText(context, "Foodomer is randomizing!!!", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 )
             }

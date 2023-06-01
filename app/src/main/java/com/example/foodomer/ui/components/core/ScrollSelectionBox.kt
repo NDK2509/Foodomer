@@ -41,8 +41,10 @@ fun <V> ScrollSelectionBox(
     val horizontalOptionPx = with(LocalDensity.current) { (screenWidth / 5).dp.toPx().toInt() }
     val gapBetween2Options = if (orientation == Orientation.Vertical) verticalOptionPx else horizontalOptionPx
 
-    onValueChange(chosenValue)
-
+    LaunchedEffect(null) {
+        onValueChange(chosenValue)
+    }
+    
     LaunchedEffect(scrollState.value) {
         val nextIndex = scrollState.value / gapBetween2Options
         if ( nextIndex != currentIndex && nextIndex < options.size) {

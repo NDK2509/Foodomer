@@ -4,15 +4,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodomer.database.entities.Food
+import com.example.foodomer.database.repositories.CategoryRepository
 import com.example.foodomer.database.repositories.FoodRepository
+import com.example.foodomer.ui.components.randomizer.RandomizerStatus
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlin.concurrent.timer
 import kotlin.random.Random
 
-class RandomizerViewModel(foodRepository: FoodRepository) : ViewModel() {
+class RandomizerViewModel(foodRepository: FoodRepository, categoryRepository: CategoryRepository) : ViewModel() {
     val foodList = foodRepository.getAll()
+    val categoryList = categoryRepository.getAll()
     val isRandomizing = mutableStateOf(false)
+    val randomizerStatus = mutableStateOf(RandomizerStatus.FREE_STYLE)
+    private val categoryId = mutableStateOf<Int?>(null)
 
     private var _randomizingFood = MutableStateFlow<Food?>(null)
     val randomizingFood = _randomizingFood.asStateFlow()
@@ -21,7 +26,12 @@ class RandomizerViewModel(foodRepository: FoodRepository) : ViewModel() {
 
     fun randomFood() {
         viewModelScope.launch {
-            val foods = foodList.first()
+            val foods =
+                if (categoryId.value == null) {
+                    foodList.first()
+                } else {
+                    foodList.first().filter { it.categoryId == categoryId.value }
+                }
             val numOfFoods = foods.size
             var duration = 0
             var randomIndex: Int
@@ -42,5 +52,19 @@ class RandomizerViewModel(foodRepository: FoodRepository) : ViewModel() {
                 }
             }
         }
+    }
+
+    fun toggleRandomizerTab() {
+        randomizerStatus.value =
+            if (randomizerStatus.value == RandomizerStatus.FREE_STYLE) {
+                RandomizerStatus.CATEGORY
+            } else {
+                categoryId.value = null
+                RandomizerStatus.FREE_STYLE
+            }
+    }
+
+    fun chooseCategory(id: Int) {
+        categoryId.value = id
     }
 }

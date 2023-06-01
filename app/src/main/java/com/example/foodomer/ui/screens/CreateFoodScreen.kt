@@ -42,7 +42,7 @@ fun CreateFoodScreen(
     val uiState by viewModel.uiState.collectAsState()
     val categories by viewModel.categories.collectAsState(initial = emptyList())
     val imgUri by viewModel.imgUri.collectAsState()
-
+    val priceError by viewModel.priceConvertError
     val context = LocalContext.current
 
     if (categories.isNotEmpty()) {
@@ -172,7 +172,16 @@ fun CreateFoodScreen(
                                 Toast.makeText(context, "You have just added ${uiState.name}!", Toast.LENGTH_SHORT).show()
                             }
                             else {
-                                Toast.makeText(context, "Please fill all of fields above!", Toast.LENGTH_SHORT).show()
+                                if (priceError) {
+                                    Toast.makeText(
+                                        context,
+                                        "Price must be less than 2 billion :)))",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Toast.makeText(context, "Please fill all of fields above!", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
                             }
                         } catch (exception: Exception) {
                             Toast.makeText(context, "There are some errors occurred!", Toast.LENGTH_SHORT).show()

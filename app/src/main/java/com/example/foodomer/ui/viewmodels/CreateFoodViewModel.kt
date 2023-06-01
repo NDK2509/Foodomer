@@ -2,6 +2,7 @@ package com.example.foodomer.ui.viewmodels
 
 import android.content.Context
 import android.net.Uri
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodomer.database.entities.Food
@@ -26,6 +27,7 @@ class CreateFoodViewModel(
     val categories = categoryRepository.getAll()
     val uiState = _uiState.asStateFlow()
     val imgUri = _imgUri.asStateFlow()
+    val priceConvertError = mutableStateOf(false)
 
     fun setName(name: String) {
         _uiState.value = _uiState.value.copy(name = name)
@@ -49,15 +51,24 @@ class CreateFoodViewModel(
 
     fun saveFood(context: Context): Boolean {
         var result = true
+        priceConvertError.value = false
         viewModelScope.launch {
             if (validate()) {
                 val foodState = uiState.value
                 val img = saveUriIntoExternalStorage(context, _imgUri.value!!)
+                val price: Int
+                try {
+                    price = foodState.price.toInt()
+                } catch (e: Exception) {
+                    priceConvertError.value = true
+                    result = false
+                    return@launch
+                }
                 foodRepository.insert(
                     Food(
                         name = foodState.name,
                         categoryId = foodState.categoryId!!,
-                        price = foodState.price.toInt(),
+                        price = price,
                         description = foodState.description,
                         img = img
                     )

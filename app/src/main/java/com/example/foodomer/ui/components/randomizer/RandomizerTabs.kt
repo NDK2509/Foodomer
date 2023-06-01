@@ -23,6 +23,11 @@ import com.example.foodomer.ui.theme.OrangePrimary
 import com.example.foodomer.utils.getScreenWidth
 import com.example.foodomer.utils.slideByOffsetX
 
+object RandomizerStatus {
+    const val FREE_STYLE = 0
+    const val CATEGORY = 1
+}
+
 @Composable
 fun RandomizerTabIndicator(
     width: Dp,
@@ -42,8 +47,7 @@ fun RandomizerTabIndicator(
 @Preview(showBackground = true)
 @Composable
 fun RandomizerTab(
-    onClickFreeStyle: () -> Unit = {},
-    onClickCategoryStyle: () -> Unit = {}
+    onToggle: () -> Unit = {}
 ) {
     val indicatorWidth = getScreenWidth() - 2 * DEFAULT_PADDING.value
     var indicatorOffsetX by remember { mutableStateOf(0.dp) }
@@ -79,7 +83,7 @@ fun RandomizerTab(
                             interactionSource = MutableInteractionSource(), indication = null
                         ) {
                             indicatorOffsetX = 0.dp
-                            onClickFreeStyle()
+                            onToggle()
                         },
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -94,7 +98,7 @@ fun RandomizerTab(
                             interactionSource = MutableInteractionSource(), indication = null
                         ) {
                            indicatorOffsetX =  (indicatorWidth / 2  - 20/ 2 + 1).dp
-                            onClickCategoryStyle()
+                            onToggle()
                         },
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally

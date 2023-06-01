@@ -21,7 +21,8 @@ object AppViewModelProvider {
 
         initializer {
             RandomizerViewModel(
-                getApplication().container.foodRepository
+                getApplication().container.foodRepository,
+                getApplication().container.categoryRepository
             )
         }
 

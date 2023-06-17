@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -88,7 +89,8 @@ fun HomeScreen(
                     .width(100.dp)
                     .aspectRatio(1f)
                     .clip(CircleShape)
-                    .border(2.dp, OrangePrimary, CircleShape)
+                    .border(2.dp, OrangePrimary, CircleShape),
+                contentScale = ContentScale.Crop
             )
             Column {
                 Text("Do you want to delete", color = Color.Black, fontSize = 16.sp, fontWeight = FontWeight.Bold)

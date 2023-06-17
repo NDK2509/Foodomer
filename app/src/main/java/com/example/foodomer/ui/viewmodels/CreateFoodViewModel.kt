@@ -55,15 +55,14 @@ class CreateFoodViewModel(
         viewModelScope.launch {
             if (validate()) {
                 val foodState = uiState.value
-                val img = saveUriIntoExternalStorage(context, _imgUri.value!!)
-                val price: Int
-                try {
-                    price = foodState.price.toInt()
+                val price = try {
+                    foodState.price.toInt()
                 } catch (e: Exception) {
                     priceConvertError.value = true
                     result = false
                     return@launch
                 }
+                val img = saveUriIntoExternalStorage(context, _imgUri.value!!)
                 foodRepository.insert(
                     Food(
                         name = foodState.name,

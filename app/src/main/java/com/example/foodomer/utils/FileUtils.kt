@@ -9,6 +9,7 @@ import androidx.core.net.toUri
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.net.URI
 import java.util.*
 
 fun saveUriIntoExternalStorage(context: Context, uri: Uri): String {
@@ -29,4 +30,9 @@ fun saveUriIntoExternalStorage(context: Context, uri: Uri): String {
     }
 
     return newFile.toUri().toString()
+}
+
+fun deleteImageByUri(uriStr: String) {
+    val file = File(URI.create(uriStr))
+    file.delete()
 }

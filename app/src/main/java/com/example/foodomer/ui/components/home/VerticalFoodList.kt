@@ -16,6 +16,7 @@ fun VerticalFoodList(
     items: List<Food>,
     onTitleClick: () -> Unit = {},
     onItemClick: (food: Food) -> Unit = {},
+    onItemDelete: (food: Food) -> Unit = {},
     onAddClick: () -> Unit = {}
 ) {
     Column(
@@ -25,7 +26,7 @@ fun VerticalFoodList(
         Spacer(Modifier.height(10.dp))
         VerticalScrollList {
             items.map {
-                FoodItem(it, onClick = { onItemClick(it) })
+                FoodItem(it, onClick = { onItemClick(it) }, onDelete = { onItemDelete(it) })
             }
         }
     }

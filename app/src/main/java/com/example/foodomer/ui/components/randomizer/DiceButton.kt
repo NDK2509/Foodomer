@@ -14,8 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.foodomer.R
-import com.example.foodomer.ui.components.home.shadow
 import com.example.foodomer.ui.theme.OrangePrimary
+import com.example.foodomer.utils.shadow
 
 @Preview
 @Composable

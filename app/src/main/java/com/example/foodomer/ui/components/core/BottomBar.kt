@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.foodomer.R
 import com.example.foodomer.ui.theme.BlackPrimary
@@ -81,6 +82,9 @@ fun BottomBar(
     var currentIndex by remember { mutableStateOf(0) }
     var indicatorPosition by remember { mutableStateOf(8.dp) }
 
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+
     AnimatedVisibility(
         isShown,
         enter = scaleIn(),
@@ -105,7 +109,22 @@ fun BottomBar(
                 )
 
                 val iconsPadding = indicatorWidth / 2 + 8 - ICON_SIZE.value / 2
-                val indicatorPositionUnit = ((bottomBarWidth - 2 * iconsPadding - ICON_SIZE.value) / (numOfItems - 1)).dp
+                val indicatorPositionUnit =
+                    ((bottomBarWidth - 2 * iconsPadding - ICON_SIZE.value) / (numOfItems - 1)).dp
+
+                LaunchedEffect(navBackStackEntry?.destination?.route) {
+                    val currentRoute = navBackStackEntry?.destination?.route
+                    items.forEachIndexed { idx, item ->
+                        if (currentRoute == item.destination) {
+                            if (idx > currentIndex) {
+                                indicatorPosition += (indicatorPositionUnit) * (idx - currentIndex)
+                            } else if (idx < currentIndex) {
+                                indicatorPosition -= (indicatorPositionUnit) * (currentIndex - idx)
+                            }
+                            currentIndex = idx
+                        }
+                    }
+                }
 
                 Row(
                     modifier =
@@ -121,13 +140,6 @@ fun BottomBar(
                         BottomBarItem(
                             props = it,
                             onClick = {
-                                if (idx > currentIndex) {
-                                    indicatorPosition += (indicatorPositionUnit) * (idx - currentIndex)
-                                } else if (idx < currentIndex) {
-                                    indicatorPosition -= (indicatorPositionUnit) * (currentIndex - idx)
-                                }
-
-                                currentIndex = idx
                                 navController.navigate(it.destination)
                             },
                             isActive = idx == currentIndex

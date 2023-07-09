@@ -2,19 +2,18 @@ package com.example.foodomer.ui.components.home
 
 import android.net.Uri
 import androidx.compose.animation.*
-import androidx.compose.foundation.*
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -24,34 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.foodomer.database.entities.Food
+import com.example.foodomer.ui.components.core.DeleteButton
 import com.example.foodomer.ui.theme.LightOrange
 import com.example.foodomer.ui.theme.OrangePrimary
-
-@Composable
-fun DeleteButton(
-    onDelete: () -> Unit
-) {
-    Column(
-        modifier =
-            Modifier
-                .width(40.dp)
-                .aspectRatio(1f)
-                .clip(RoundedCornerShape(8.dp))
-                .background(Color.White)
-                .clickable {
-                    onDelete()
-                },
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Icon(
-            Icons.Default.Add,
-            "",
-            tint = Color.Red,
-            modifier = Modifier.rotate(45f).width(30.dp).aspectRatio(1f)
-        )
-    }
-}
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
@@ -64,7 +38,11 @@ fun FoodItem(
     var isLongPressed by remember { mutableStateOf(false) }
     Row(
         modifier =
-            modifier
+        modifier
+            .fillMaxWidth()
+            .height(85.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(LightOrange)
                 .combinedClickable(
                     onClick = {
                         if (isLongPressed) {
@@ -77,10 +55,6 @@ fun FoodItem(
                         isLongPressed = true
                     }
                 )
-                .fillMaxWidth()
-                .height(85.dp)
-                .clip(RoundedCornerShape(10.dp))
-                .background(LightOrange)
                 .padding(start = 30.dp, end = 20.dp),
         horizontalArrangement = Arrangement.spacedBy(20.dp),
         verticalAlignment = Alignment.CenterVertically

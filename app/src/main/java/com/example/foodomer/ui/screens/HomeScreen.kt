@@ -58,7 +58,8 @@ fun HomeScreen(
         WelcomeParagraph("Nguyen Dang Ky")
         HorizontalCategoryList(
             items = categories,
-            onAddClick = { navController?.navigate(Destinations.CreateCategory.route) }
+            onAddClick = { navController?.navigate(Destinations.CreateCategory.route) },
+            onDeleteItem = viewModel::deleteCategory
         )
         VerticalFoodList(
             items = foods,

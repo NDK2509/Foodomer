@@ -12,15 +12,19 @@ class FoodRepository(
 ) {
     fun getAll(): Flow<List<Food>> = foodDAO.getAll()
     fun getById(id: Int): Flow<Food?> = foodDAO.getById(id)
+    fun getByCategoryId(categoryId: Int): Flow<List<Food>> = foodDAO.getByCategoryId(categoryId)
     fun insert(food: Food) = coroutineScope.launch(Dispatchers.IO) {
         foodDAO.insert(food)
     }
-    fun updateItem(food: Food) = coroutineScope.launch(Dispatchers.IO) {
+
+    fun update(food: Food) = coroutineScope.launch(Dispatchers.IO) {
         foodDAO.update(food)
     }
-    suspend fun delete(food: Food) = coroutineScope.launch(Dispatchers.IO) {
+
+    fun delete(food: Food) = coroutineScope.launch(Dispatchers.IO) {
         foodDAO.delete(food)
     }
+
     fun deleteById(id: Int) {
         coroutineScope.launch(Dispatchers.IO) {
             val food = foodDAO.getById(id)

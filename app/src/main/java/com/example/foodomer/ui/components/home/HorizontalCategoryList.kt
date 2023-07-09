@@ -16,7 +16,8 @@ import com.example.foodomer.ui.theme.OrangePrimary
 fun HorizontalCategoryList(
     items: List<Category>,
     onItemClick: (Category) -> Unit = {},
-    onAddClick: () -> Unit = {}
+    onAddClick: () -> Unit = {},
+    onDeleteItem: (Category) -> Unit = {}
 ) {
     Column(
         modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp)
@@ -26,7 +27,7 @@ fun HorizontalCategoryList(
         if (items.isNotEmpty()) {
             HorizontalScrollList {
                 items.map {
-                    CategoryItem(it, onClick = { onItemClick(it) })
+                    CategoryItem(it, onClick = { onItemClick(it) }, onDelete = { onDeleteItem(it) })
                 }
                 Spacer(Modifier.width(0.5f.dp))
             }

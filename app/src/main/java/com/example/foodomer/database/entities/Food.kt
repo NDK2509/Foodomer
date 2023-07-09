@@ -1,9 +1,6 @@
 package com.example.foodomer.database.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.example.foodomer.utils.now
 
 @Entity(
@@ -16,6 +13,9 @@ import com.example.foodomer.utils.now
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
+    ],
+    indices = [
+        Index("category_id")
     ]
 )
 data class Food(
@@ -27,6 +27,8 @@ data class Food(
     val price: Int,
     val img: String,
     val description: String,
+    @ColumnInfo(name = "is_deleted", defaultValue = "false")
+    val deleted: Boolean = false,
     @ColumnInfo(name = "created_at")
     val createdAt: Long = now().time,
     @ColumnInfo(name = "updated_at")

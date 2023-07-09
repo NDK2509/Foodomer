@@ -1,23 +1,21 @@
 package com.example.foodomer.database.daos
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
 import com.example.foodomer.database.entities.Category
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface CategoryDAO {
-    @Query("SELECT * from categories")
-    fun getAll(): Flow<List<Category>>
+interface CategoryDAO : BaseDAO<Category, Int> {
+    @Query("SELECT * from categories WHERE is_deleted = 0")
+    override fun getAll(): Flow<List<Category>>
 
     @Query("SELECT * from categories WHERE id = :id")
-    fun getById(id: Int): Flow<Category?>
+    override fun getById(id: Int): Flow<Category?>
 
-    @Insert
-    suspend fun insert(category: Category)
+    @Query("UPDATE categories SET is_deleted = 1 WHERE id = :id")
+    override fun softDelete(id: Int)
 
-    @Update
-    suspend fun update(category: Category)
-
-    @Delete
-    suspend fun delete(category: Category)
+    @Query("SELECT EXISTS (SELECT * FROM foods WHERE category_id = :categoryId)")
+    suspend fun existsFoodsInCategory(categoryId: Int): Boolean
 }

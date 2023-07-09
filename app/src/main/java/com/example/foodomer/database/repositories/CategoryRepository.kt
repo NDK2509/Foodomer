@@ -8,7 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class CategoryRepository(
-    private val categoryDAO: CategoryDAO, private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
+    private val categoryDAO: CategoryDAO,
+    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 ) {
     fun getAll(): Flow<List<Category>> = categoryDAO.getAll()
     fun getById(id: Int): Flow<Category?> = categoryDAO.getById(id)
@@ -20,7 +21,7 @@ class CategoryRepository(
         categoryDAO.update(category)
     }
 
-    suspend fun delete(category: Category) = coroutineScope.launch(Dispatchers.IO) {
+    fun delete(category: Category) = coroutineScope.launch(Dispatchers.IO) {
         categoryDAO.delete(category)
     }
 
@@ -28,7 +29,13 @@ class CategoryRepository(
         coroutineScope.launch(Dispatchers.IO) {
             val category = categoryDAO.getById(id)
             category.collect {
-                if (it != null) {
+                if (it == null) {
+                    return@collect
+                }
+                val isAnyFoodsInCategory = categoryDAO.existsFoodsInCategory(id)
+                if (isAnyFoodsInCategory) {
+                    categoryDAO.softDelete(it.id)
+                } else {
                     categoryDAO.delete(it)
                 }
             }

@@ -11,6 +11,8 @@ data class Category(
     val id: Int = 0,
     val name: String,
     val description: String,
+    @ColumnInfo(name = "is_deleted", defaultValue = "false")
+    val deleted: Boolean = false,
     @ColumnInfo(name = "created_at")
     val createdAt: Long = now().time,
     @ColumnInfo(name = "updated_at")

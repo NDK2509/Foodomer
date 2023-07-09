@@ -12,10 +12,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.foodomer.R
 import com.example.foodomer.ui.components.core.BottomBar
 import com.example.foodomer.ui.components.core.BottomBarItemProps
@@ -71,6 +73,12 @@ fun MainNavigation() {
                 composable(Destinations.Randomizer.route) { RandomizerScreen(navController) }
                 composable(Destinations.CreateCategory.route) { CreateCategoryScreen(navController) }
                 composable(Destinations.CreateFood.route) { CreateFoodScreen(navController) }
+                composable(
+                    route = Destinations.FoodDetails.routeWithParams,
+                    arguments = listOf(navArgument("id") { type = NavType.IntType })
+                ) { backStackEntry ->
+                    backStackEntry.arguments?.let { FoodDetailsScreen(navController, it.getInt("id")) }
+                }
             }
         }
     }

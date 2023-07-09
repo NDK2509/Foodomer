@@ -5,10 +5,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.foodomer.MainApplication
-import com.example.foodomer.ui.viewmodels.CreateCategoryViewModel
-import com.example.foodomer.ui.viewmodels.CreateFoodViewModel
-import com.example.foodomer.ui.viewmodels.HomeViewModel
-import com.example.foodomer.ui.viewmodels.RandomizerViewModel
+import com.example.foodomer.ui.viewmodels.*
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -37,6 +34,12 @@ object AppViewModelProvider {
             CreateFoodViewModel(
                 container.foodRepository,
                 container.categoryRepository
+            )
+        }
+
+        initializer {
+            FoodDetailsViewModel(
+                getApplication().container.foodRepository
             )
         }
     }

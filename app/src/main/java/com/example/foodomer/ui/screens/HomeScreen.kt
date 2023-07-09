@@ -67,6 +67,9 @@ fun HomeScreen(
             onItemDelete = {
                 viewModel.setDeletedFood(it)
                 viewModel.openDeleteDialog()
+            },
+            onItemClick = {
+                navController?.navigate(Destinations.FoodDetails.routeWithFilledParams(it.id))
             }
         )
     }

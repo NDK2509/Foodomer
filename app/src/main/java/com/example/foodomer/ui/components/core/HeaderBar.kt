@@ -20,6 +20,25 @@ import com.example.foodomer.ui.theme.OrangePrimary
 
 val ICON_SIZE = 40.dp
 
+@Composable
+fun HeaderIcon(
+    resourceId: Int,
+    iconColor: Color = OrangePrimary,
+    onClick: () -> Unit = {}
+) {
+    Icon(
+        painterResource(resourceId),
+        "",
+        tint = iconColor,
+        modifier =
+        Modifier
+            .width(ICON_SIZE)
+            .clickable {
+                onClick()
+            }
+    )
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HeaderBar(
@@ -27,30 +46,18 @@ fun HeaderBar(
     showBackButton: Boolean = false,
     iconColor: Color = OrangePrimary,
     leftItems: @Composable () -> Unit = {
-        Icon(
-            painterResource(R.drawable.icon_settings),
-            "",
-            tint = iconColor,
-            modifier =
-                Modifier
-                    .width(ICON_SIZE)
-                    .clickable {
-                        navController?.navigate(Destinations.Settings.route)
-                    }
+        HeaderIcon(
+            resourceId = R.drawable.icon_settings,
+            iconColor = iconColor,
+            onClick = { navController?.navigate(Destinations.Settings.route) }
         )
     },
     title: @Composable () -> Unit = {},
     rightItems: @Composable () -> Unit = {
-        Icon(
-            painterResource(R.drawable.icon_search),
-            "",
-            tint = iconColor,
-            modifier =
-                Modifier
-                    .width(ICON_SIZE)
-                    .clickable {
-                        navController?.navigate(Destinations.Search.route)
-                    }
+        HeaderIcon(
+            resourceId = R.drawable.icon_search,
+            iconColor = iconColor,
+            onClick = { navController?.navigate(Destinations.Search.route) }
         )
     },
 ) {
@@ -60,16 +67,10 @@ fun HeaderBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (showBackButton) {
-            Icon(
-                painterResource(R.drawable.icon_angle_left),
-                "",
-                tint = iconColor,
-                modifier =
-                    Modifier
-                        .width(ICON_SIZE)
-                        .clickable {
-                            navController?.popBackStack()
-                        }
+            HeaderIcon(
+                resourceId = R.drawable.icon_angle_left,
+                iconColor = iconColor,
+                onClick = { navController?.popBackStack() }
             )
         } else leftItems()
         title()

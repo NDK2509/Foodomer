@@ -34,3 +34,13 @@ data class Food(
     @ColumnInfo(name = "updated_at")
     val updatedAt: Long? = null
 )
+
+data class FoodWithCategory(
+    @Embedded
+    val food: Food,
+    @Relation(
+        parentColumn = "category_id",
+        entityColumn = "id"
+    )
+    val category: Category
+)

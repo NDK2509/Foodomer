@@ -4,15 +4,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodomer.database.entities.Food
+import com.example.foodomer.database.entities.History
 import com.example.foodomer.database.repositories.CategoryRepository
 import com.example.foodomer.database.repositories.FoodRepository
+import com.example.foodomer.database.repositories.HistoryRepository
 import com.example.foodomer.ui.components.randomizer.RandomizerStatus
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlin.concurrent.timer
 import kotlin.random.Random
 
-class RandomizerViewModel(foodRepository: FoodRepository, categoryRepository: CategoryRepository) : ViewModel() {
+class RandomizerViewModel(
+    private val foodRepository: FoodRepository,
+    private val categoryRepository: CategoryRepository,
+    private val historyRepository: HistoryRepository
+) : ViewModel() {
     val foodList = foodRepository.getAll()
     val categoryList = categoryRepository.getAll()
     val isRandomizing = mutableStateOf(false)
@@ -45,9 +51,11 @@ class RandomizerViewModel(foodRepository: FoodRepository, categoryRepository: Ca
                 duration += 150
                 if (duration >= 5000) {
                     cancel()
+                    val result = foods[randomIndex]
                     _chosenFood.update {
-                        foods[randomIndex]
+                        result
                     }
+                    historyRepository.insert(History(foodId = result.id))
                     isRandomizing.value = false
                 }
             }

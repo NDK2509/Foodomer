@@ -6,7 +6,7 @@ import com.example.foodomer.database.entities.Category
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface CategoryDAO : BaseDAO<Category, Int> {
+interface CategoryDAO : BaseDAO<Category, Int>, SoftDelete<Int> {
     @Query("SELECT * from categories WHERE is_deleted = 0")
     override fun getAll(): Flow<List<Category>>
 

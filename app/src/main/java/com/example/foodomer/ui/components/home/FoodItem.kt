@@ -1,7 +1,10 @@
 package com.example.foodomer.ui.components.home
 
 import android.net.Uri
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,8 +29,9 @@ import com.example.foodomer.database.entities.Food
 import com.example.foodomer.ui.components.core.DeleteButton
 import com.example.foodomer.ui.theme.LightOrange
 import com.example.foodomer.ui.theme.OrangePrimary
+import com.example.foodomer.utils.thousandGroupByDot
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FoodItem(
     food: Food,
@@ -84,7 +88,7 @@ fun FoodItem(
                 maxLines = 1
             )
             Text(
-                "${String.format("%,d", food.price)} đ",
+                "${food.price.thousandGroupByDot()} đ",
                 color = Color.Red,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold

@@ -80,6 +80,7 @@ fun MainNavigation() {
                 ) { backStackEntry ->
                     backStackEntry.arguments?.let { FoodDetailsScreen(navController, it.getInt("id")) }
                 }
+                composable(Destinations.History.route) { RandomHistoryScreen(navController) }
             }
         }
     }

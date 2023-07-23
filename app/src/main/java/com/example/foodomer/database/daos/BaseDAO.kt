@@ -17,5 +17,8 @@ interface BaseDAO<E, ID> {
 
     @Delete
     suspend fun delete(entity: E)
+}
+
+interface SoftDelete<ID> {
     fun softDelete(id: ID)
 }

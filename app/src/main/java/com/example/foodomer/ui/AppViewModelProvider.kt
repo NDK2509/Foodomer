@@ -19,7 +19,8 @@ object AppViewModelProvider {
         initializer {
             RandomizerViewModel(
                 getApplication().container.foodRepository,
-                getApplication().container.categoryRepository
+                getApplication().container.categoryRepository,
+                getApplication().container.historyRepository
             )
         }
 
@@ -40,6 +41,12 @@ object AppViewModelProvider {
         initializer {
             FoodDetailsViewModel(
                 getApplication().container.foodRepository
+            )
+        }
+
+        initializer {
+            RandomHistoryViewModel(
+                getApplication().container.historyRepository
             )
         }
     }

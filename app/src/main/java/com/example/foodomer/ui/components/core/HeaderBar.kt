@@ -15,7 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.foodomer.R
-import com.example.foodomer.navigation.Destinations
 import com.example.foodomer.ui.theme.OrangePrimary
 
 val ICON_SIZE = 40.dp
@@ -49,7 +48,8 @@ fun HeaderBar(
         HeaderIcon(
             resourceId = R.drawable.icon_settings,
             iconColor = iconColor,
-            onClick = { navController?.navigate(Destinations.Settings.route) }
+//            onClick = { navController?.navigate(Destinations.Settings.route) }
+            onClick = {}
         )
     },
     title: @Composable () -> Unit = {},
@@ -57,7 +57,8 @@ fun HeaderBar(
         HeaderIcon(
             resourceId = R.drawable.icon_search,
             iconColor = iconColor,
-            onClick = { navController?.navigate(Destinations.Search.route) }
+//            onClick = { navController?.navigate(Destinations.Search.route) }
+            onClick = {}
         )
     },
 ) {

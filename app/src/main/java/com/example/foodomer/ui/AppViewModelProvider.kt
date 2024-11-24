@@ -49,6 +49,10 @@ object AppViewModelProvider {
                 getApplication().container.historyRepository
             )
         }
+
+        initializer {
+            QRCodeViewModel()
+        }
     }
 }
 

@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.foodomer.R
+import com.example.foodomer.navigation.Destinations
 import com.example.foodomer.ui.AppViewModelProvider
 import com.example.foodomer.ui.components.core.*
 import com.example.foodomer.ui.components.randomizer.FoodImageFrame
@@ -46,7 +47,9 @@ fun FoodDetailsScreen(
             rightItems = {
                 HeaderIcon(
                     resourceId = R.drawable.icon_share,
-                    onClick = {}
+                    onClick = {
+                        navController?.navigate(Destinations.QRCodeSharing.routeWithFilledParams(food?.food.toString()))
+                    }
                 )
             }
         )

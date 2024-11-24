@@ -81,6 +81,14 @@ fun MainNavigation() {
                     backStackEntry.arguments?.let { FoodDetailsScreen(navController, it.getInt("id")) }
                 }
                 composable(Destinations.History.route) { RandomHistoryScreen(navController) }
+                composable(
+                    route = Destinations.QRCodeSharing.routeWithParams,
+                    arguments = listOf(navArgument("data") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    backStackEntry.arguments?.getString("data")?.let {
+                        QRCodeSharingScreen(navController, it)
+                    }
+                }
             }
         }
     }

@@ -33,7 +33,11 @@ data class Food(
     val createdAt: Long = now().time,
     @ColumnInfo(name = "updated_at")
     val updatedAt: Long? = null
-)
+) {
+    override fun toString(): String {
+        return "id: $id, name: $name"
+    }
+}
 
 data class FoodWithCategory(
     @Embedded

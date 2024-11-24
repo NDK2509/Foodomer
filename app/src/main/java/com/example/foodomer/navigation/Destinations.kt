@@ -11,13 +11,14 @@ sealed class Destinations(val route: String, vararg params: String) {
         } else this.route
     }
 
-    object Welcome : Destinations("Welcome")
-    object Home : Destinations("Home")
-    object Randomizer : Destinations("Randomizer")
-    object CreateCategory : Destinations("Create-category")
-    object CreateFood : Destinations("Create-food")
-    object FoodDetails : Destinations("Food-details", "id")
-    object History : Destinations("History")
-    object Settings : Destinations("Settings")
-    object Search : Destinations("Search")
+    data object Welcome : Destinations("Welcome")
+    data object Home : Destinations("Home")
+    data object Randomizer : Destinations("Randomizer")
+    data object CreateCategory : Destinations("Create-category")
+    data object CreateFood : Destinations("Create-food")
+    data object FoodDetails : Destinations("Food-details", "id")
+    data object History : Destinations("History")
+    data object Settings : Destinations("Settings")
+    data object Search : Destinations("Search")
+    data object QRCodeSharing : Destinations("QRCodeSharing", "data")
 }

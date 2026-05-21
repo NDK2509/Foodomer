@@ -1,9 +1,7 @@
 package com.example.foodomer.ui.components.core
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -13,7 +11,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,34 +57,48 @@ fun CommonDialog(
 
     AnimatedVisibility(
         isOpen,
-        enter = scaleIn(),
-        exit = scaleOut()
+        enter = fadeIn(animationSpec = tween(300, easing = EaseInOutCubic)),
+        exit = fadeOut(animationSpec = tween(250, easing = EaseInOutCubic))
     ) {
-        Surface(
-            modifier =
-            Modifier
+        Box(
+            modifier = Modifier
                 .width(screenWidth.dp)
                 .height(screenHeight.dp)
+                .background(Color.Black.copy(alpha = 0.4f))
                 .zIndex(9999f)
-                .clickable(interactionSource = MutableInteractionSource(), indication = null) {
+                .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) {
                     onDismiss()
                 },
-            color = OrangePrimary.copy(alpha = 0f)
+            contentAlignment = Alignment.Center
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(20.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+            var isDialogVisible by remember { mutableStateOf(false) }
+            LaunchedEffect(isOpen) {
+                isDialogVisible = isOpen
+            }
+
+            AnimatedVisibility(
+                visible = isDialogVisible,
+                enter = scaleIn(
+                    initialScale = 0.8f,
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessMediumLow
+                    )
+                ) + fadeIn(animationSpec = tween(200, easing = EaseInOutCubic)),
+                exit = scaleOut(
+                    targetScale = 0.8f,
+                    animationSpec = tween(150, easing = EaseInCubic)
+                ) + fadeOut(animationSpec = tween(150))
             ) {
                 Column(
-                    modifier =
-                    modifier
-                        .fillMaxWidth()
+                    modifier = modifier
+                        .fillMaxWidth(0.85f)
                         .aspectRatio(1f)
-                        .clip(RoundedCornerShape(7.dp))
+                        .clip(RoundedCornerShape(16.dp))
                         .background(Color.White)
-                        .border(2.dp, OrangePrimary, RoundedCornerShape(7.dp))
-                        .padding(20.dp),
+                        .border(2.dp, OrangePrimary, RoundedCornerShape(16.dp))
+                        .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) {}
+                        .padding(24.dp),
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -103,12 +115,14 @@ fun CommonDialog(
                         Button(
                             onClick = onDismiss,
                             border = BorderStroke(2.dp, OrangePrimary),
+                            shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
                         ) {
                             dismissText()
                         }
                         Button(
                             onClick = onConfirm,
+                            shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(backgroundColor = OrangePrimary)
                         ) {
                             confirmText()

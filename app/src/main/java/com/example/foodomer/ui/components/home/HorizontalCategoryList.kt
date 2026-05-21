@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.sp
 import com.example.foodomer.database.entities.Category
 import com.example.foodomer.ui.components.core.HorizontalScrollList
 import com.example.foodomer.ui.theme.OrangePrimary
+import com.example.foodomer.utils.scaleInOnShow
 
 @Composable
 fun HorizontalCategoryList(
@@ -26,8 +27,13 @@ fun HorizontalCategoryList(
         Spacer(Modifier.height(10.dp))
         if (items.isNotEmpty()) {
             HorizontalScrollList {
-                items.map {
-                    CategoryItem(it, onClick = { onItemClick(it) }, onDelete = { onDeleteItem(it) })
+                items.forEachIndexed { idx, it ->
+                    CategoryItem(
+                        it,
+                        modifier = Modifier.scaleInOnShow(delay = idx * 100),
+                        onClick = { onItemClick(it) },
+                        onDelete = { onDeleteItem(it) }
+                    )
                 }
                 Spacer(Modifier.width(0.5f.dp))
             }

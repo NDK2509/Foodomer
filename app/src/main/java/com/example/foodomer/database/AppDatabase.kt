@@ -11,7 +11,7 @@ import com.example.foodomer.database.entities.Category
 import com.example.foodomer.database.entities.Food
 import com.example.foodomer.database.entities.History
 
-@Database(entities = [Category::class, Food::class, History::class], version = 1)
+@Database(entities = [Category::class, Food::class, History::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun foodDAO(): FoodDAO
     abstract fun categoryDAO(): CategoryDAO

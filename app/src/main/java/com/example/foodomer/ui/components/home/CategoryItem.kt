@@ -43,11 +43,11 @@ fun CategoryItem(
     onDelete: () -> Unit = {}
 ) {
     var isLongPressed by remember { mutableStateOf(false) }
-    val illustrationImg = randomCategoryIllustration()
+    val illustrationImg = remember { randomCategoryIllustration() }
     Row(
         modifier =
         modifier
-            .width(250.dp)
+            .width(200.dp)
             .aspectRatio(1.8f)
             .shadow(
                 offsetX = 4.dp,
@@ -106,7 +106,7 @@ fun CategoryItem(
                     Text(
                         category.name,
                         color = Color.White,
-                        fontSize = 18.sp,
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -115,7 +115,7 @@ fun CategoryItem(
                     Text(
                         category.description,
                         color = Color.White,
-                        fontSize = 12.sp,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
                         maxLines = 3,
                         overflow = TextOverflow.Ellipsis

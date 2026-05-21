@@ -72,12 +72,12 @@ fun ListTitle(
                     .clickable { onClick() }
                     .semantics { Role.Button },
         ) {
-            Text(label, fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, color = Color.Black)
+            Text(label, fontSize = 15.sp, fontWeight = FontWeight.ExtraBold, color = Color.Black)
             Icon(
                 iconPainter,
                 "",
                 tint = Color.Black,
-                modifier = Modifier.width(20.dp).aspectRatio(1f)
+                modifier = Modifier.width(16.dp).aspectRatio(1f)
             )
         }
         AddButton(onAddClick)

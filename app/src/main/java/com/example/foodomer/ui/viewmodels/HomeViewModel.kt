@@ -7,14 +7,25 @@ import com.example.foodomer.database.entities.Category
 import com.example.foodomer.database.entities.Food
 import com.example.foodomer.database.repositories.CategoryRepository
 import com.example.foodomer.database.repositories.FoodRepository
+import com.example.foodomer.database.repositories.HistoryRepository
 import com.example.foodomer.utils.deleteImageByUri
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val foodRepository: FoodRepository,
-    private val categoryRepository: CategoryRepository
+    private val categoryRepository: CategoryRepository,
+    private val historyRepository: HistoryRepository
 ): ViewModel() {
-    val foodList = foodRepository.getAll()
+    val foodList = combine(
+        foodRepository.getAll(),
+        historyRepository.getAll()
+    ) { foods, histories ->
+        foods.map { food ->
+            val count = histories.count { it.foodId == food.id }
+            food to count
+        }
+    }
     val categories = categoryRepository.getAll()
     val isDeleteDialogOpen = mutableStateOf(false)
     val willDeleteFood = mutableStateOf<Food?>(null)

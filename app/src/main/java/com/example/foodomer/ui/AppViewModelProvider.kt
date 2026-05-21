@@ -12,7 +12,8 @@ object AppViewModelProvider {
         initializer {
             HomeViewModel(
                 getApplication().container.foodRepository,
-                getApplication().container.categoryRepository
+                getApplication().container.categoryRepository,
+                getApplication().container.historyRepository
             )
         }
 

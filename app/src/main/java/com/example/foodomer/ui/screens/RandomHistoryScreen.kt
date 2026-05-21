@@ -25,6 +25,9 @@ import com.example.foodomer.utils.dateOnlyFormatter
 import com.example.foodomer.utils.getScreenHeight
 import com.example.foodomer.utils.getScreenWidth
 import java.util.*
+import androidx.compose.runtime.remember
+import com.example.foodomer.utils.bobbing
+import com.example.foodomer.utils.scaleInOnShow
 
 fun handleHistoryList(historyList: List<HistoryWithFood>): Map<String, MutableList<HistoryWithFood>> {
     val map = HashMap<String, MutableList<HistoryWithFood>>()
@@ -45,12 +48,7 @@ fun RandomHistoryScreen(
     viewModel: RandomHistoryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val historyList by viewModel.historyList.collectAsState(emptyList())
-    var handledHistoryMap = handleHistoryList(historyList)
-
-    LaunchedEffect(historyList.size) {
-        Log.d("random:", "launch this")
-        handledHistoryMap = handleHistoryList(historyList)
-    }
+    val handledHistoryMap = remember(historyList) { handleHistoryList(historyList) }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -58,10 +56,10 @@ fun RandomHistoryScreen(
         val screenWidth = getScreenWidth()
         val screenHeight = getScreenHeight()
 
-        AbsoluteCircle(145.dp, offsetX = (screenWidth - 145 - 20).dp, offsetY = (-97).dp)
-        AbsoluteCircle(120.dp, offsetX = (-150).dp, offsetY = 75.dp, OrangePrimary)
-        AbsoluteCircle(90.dp, offsetX = (screenWidth - 90).dp, offsetY = (screenHeight * 0.5).dp, OrangePrimary)
-        AbsoluteCircle(60.dp, offsetX = (-80).dp, offsetY = (screenHeight * 0.7).dp)
+        AbsoluteCircle(145.dp, offsetX = (screenWidth - 145 - 20).dp, offsetY = (-97).dp, modifier = Modifier.scaleInOnShow(delay = 100).bobbing(amplitude = 12f, duration = 2400, delay = 0))
+        AbsoluteCircle(120.dp, offsetX = (-150).dp, offsetY = 75.dp, color = OrangePrimary, modifier = Modifier.scaleInOnShow(delay = 200).bobbing(amplitude = 8f, duration = 2000, delay = 100))
+        AbsoluteCircle(90.dp, offsetX = (screenWidth - 90).dp, offsetY = (screenHeight * 0.5).dp, color = OrangePrimary, modifier = Modifier.scaleInOnShow(delay = 300).bobbing(amplitude = 10f, duration = 2200, delay = 200))
+        AbsoluteCircle(60.dp, offsetX = (-80).dp, offsetY = (screenHeight * 0.7).dp, modifier = Modifier.scaleInOnShow(delay = 400).bobbing(amplitude = 14f, duration = 2600, delay = 300))
     }
     Column {
         HeaderBar(navController, showBackButton = true)

@@ -24,6 +24,8 @@ import com.example.foodomer.ui.components.createfood.BlinkedWarning
 import com.example.foodomer.ui.components.randomizer.*
 import com.example.foodomer.ui.theme.OrangePrimary
 import com.example.foodomer.ui.viewmodels.RandomizerViewModel
+import com.example.foodomer.utils.spin
+import com.example.foodomer.utils.wobbleAndPulse
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
@@ -78,7 +80,10 @@ fun RandomizerScreen(
                 }
             }
 
-            FoodImageFrame(randomizingFood?.img ?: foodList[0].img)
+            FoodImageFrame(
+                uri = randomizingFood?.img ?: foodList[0].img,
+                modifier = Modifier.wobbleAndPulse(isRandomizing)
+            )
             RandomResultParagraph(if (isRandomizing) null else chosenFood?.name)
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -86,6 +91,7 @@ fun RandomizerScreen(
                 horizontalArrangement = Arrangement.Center
             ) {
                 DiceButton(
+                    modifier = Modifier.spin(isRandomizing),
                     onClick = {
                         if (!isRandomizing) {
                             viewModel.randomFood()
@@ -110,8 +116,8 @@ fun RandomizerScreen(
         ) {
             BlinkedWarning()
             Spacer(Modifier.height(20.dp))
-            Text("You haven't got any food!", fontSize = 25.sp, fontWeight = FontWeight.Bold, color = OrangePrimary)
-            Text("Please add some foods first!", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = OrangePrimary)
+            Text("You haven't got any food!", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = OrangePrimary)
+            Text("Please add some foods first!", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = OrangePrimary)
         }
     }
 }

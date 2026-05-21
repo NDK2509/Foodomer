@@ -60,14 +60,14 @@ fun FoodDetailsScreen(
                     Text(
                         it.food.name.capitalize(),
                         fontWeight = FontWeight.Bold,
-                        fontSize = 25.sp,
+                        fontSize = 18.sp,
                         color = OrangePrimary
                     )
                     Spacer(Modifier.height(10.dp))
                     Text(
                         "Created at: ${commonDateFormatter.format(Date(it.food.createdAt))}",
                         fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp
+                        fontSize = 12.sp
                     )
                     Spacer(Modifier.height(20.dp))
                     FoodImageFrame(it.food.img)
@@ -75,7 +75,7 @@ fun FoodDetailsScreen(
 
                 Spacer(Modifier.height(30.dp))
                 Column {
-                    val commonStyle = TextStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color.Black)
+                    val commonStyle = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color.Black)
                     Row {
                         Text("Price: ", style = commonStyle)
                         Text("${it.food.price.thousandGroupByDot()} đ", color = OrangePrimary, style = commonStyle)
@@ -88,7 +88,7 @@ fun FoodDetailsScreen(
         CenteredColumn {
             CommonButton(
                 label = "Update information",
-                textStyle = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+                textStyle = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold),
                 icon = {
                     Icon(
                         painterResource(R.drawable.icon_angle_right),

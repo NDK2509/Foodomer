@@ -14,7 +14,7 @@ import com.example.foodomer.ui.theme.OrangePrimary
 fun WelcomeParagraph(
     username: String
 ) {
-    val fontSizeLarge = 32.sp
+    val fontSizeLarge = 24.sp
 
     Column {
         Row(

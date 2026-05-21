@@ -13,7 +13,8 @@ import com.example.foodomer.utils.now
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
-    ]
+    ],
+    indices = [Index(value = ["food_id"])]
 )
 data class History(
     @PrimaryKey(autoGenerate = true)

@@ -32,7 +32,7 @@ import com.example.foodomer.utils.slideByOffsetX
 
 data class BottomBarItemProps(val icon: Painter, val destination: String)
 
-val ICON_FONT_ACTIVE = 40 .dp
+val ICON_FONT_ACTIVE = 28.dp
 
 @Composable
 fun BottomBarIndicator(
@@ -63,7 +63,7 @@ fun BottomBarItem(
         onClick()
     }) {
         Icon(
-            painter = props.icon, "", tint = Color.White, modifier = Modifier.width(ICON_FONT_ACTIVE).aspectRatio(1f)
+            painter = props.icon, "", tint = Color.White, modifier = Modifier.width(ICON_FONT_ACTIVE).aspectRatio(1f).padding(2.dp)
         )
     }
 }
@@ -76,7 +76,7 @@ fun BottomBar(
     isShown: Boolean = true
 ) {
     val numOfItems = items.size
-    val bottomBarWidth = (getScreenWidth() * 0.9).toInt() + 1
+    val bottomBarWidth = (getScreenWidth() * 0.85).toInt() + 1
     val indicatorWidth = (bottomBarWidth / (numOfItems + 0.5)) + 1
 
     var currentIndex by remember { mutableStateOf(0) }
@@ -98,8 +98,8 @@ fun BottomBar(
             Box(
                 modifier =
                 Modifier
-                    .fillMaxWidth(0.9f)
-                    .height(64.dp)
+                    .fillMaxWidth(0.85f)
+                    .height(52.dp)
                     .padding(vertical = 4.dp)
                     .clip(CircleShape)
                     .background(BlackPrimary)

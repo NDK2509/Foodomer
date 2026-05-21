@@ -15,10 +15,11 @@ import androidx.compose.ui.unit.sp
 import com.example.foodomer.database.entities.Food
 import com.example.foodomer.ui.components.core.VerticalScrollList
 import com.example.foodomer.ui.theme.OrangePrimary
+import com.example.foodomer.utils.scaleInOnShow
 
 @Composable
 fun VerticalFoodList(
-    items: List<Food>,
+    items: List<Pair<Food, Int>>,
     onTitleClick: () -> Unit = {},
     onItemClick: (food: Food) -> Unit = {},
     onItemDelete: (food: Food) -> Unit = {},
@@ -31,8 +32,14 @@ fun VerticalFoodList(
         Spacer(Modifier.height(10.dp))
         if (items.isNotEmpty()) {
             VerticalScrollList {
-                items.map {
-                    FoodItem(it, onClick = { onItemClick(it) }, onDelete = { onItemDelete(it) })
+                items.forEachIndexed { idx, (food, count) ->
+                    FoodItem(
+                        food = food,
+                        enjoyedCount = count,
+                        modifier = Modifier.scaleInOnShow(delay = idx * 80),
+                        onClick = { onItemClick(food) },
+                        onDelete = { onItemDelete(food) }
+                    )
                 }
             }
         } else {
@@ -59,7 +66,7 @@ fun PreviewFoodList() {
                 9999999,
                 "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fvector-images%2Fleek-cute-cartoon.html&psig=AOvVaw3dYypkjOHocO55o--csoLs&ust=1684775648244000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCIjUqMj0hv8CFQAAAAAdAAAAABAD",
                 ""
-            ),
+            ) to 1,
             Food(
                 0,
                 0,
@@ -67,7 +74,7 @@ fun PreviewFoodList() {
                 9999999,
                 "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fvector-images%2Fleek-cute-cartoon.html&psig=AOvVaw3dYypkjOHocO55o--csoLs&ust=1684775648244000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCIjUqMj0hv8CFQAAAAAdAAAAABAD",
                 ""
-            ),
+            ) to 3,
             Food(
                 0,
                 0,
@@ -75,14 +82,14 @@ fun PreviewFoodList() {
                 9999999,
                 "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fvector-images%2Fleek-cute-cartoon.html&psig=AOvVaw3dYypkjOHocO55o--csoLs&ust=1684775648244000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCIjUqMj0hv8CFQAAAAAdAAAAABAD",
                 ""
-            ), Food(
+            ) to 5, Food(
                 0,
                 0,
                 "Cu ke ngoc",
                 9999999,
                 "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fvector-images%2Fleek-cute-cartoon.html&psig=AOvVaw3dYypkjOHocO55o--csoLs&ust=1684775648244000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCIjUqMj0hv8CFQAAAAAdAAAAABAD",
                 ""
-            )
+            ) to 10
         )
     )
 }

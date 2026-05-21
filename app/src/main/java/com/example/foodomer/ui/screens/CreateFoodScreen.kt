@@ -31,6 +31,10 @@ import com.example.foodomer.ui.theme.OrangePrimary
 import com.example.foodomer.ui.viewmodels.CreateFoodViewModel
 import com.example.foodomer.utils.getScreenHeight
 import com.example.foodomer.utils.getScreenWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import com.example.foodomer.utils.bobbing
+import com.example.foodomer.utils.scaleInOnShow
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
@@ -44,24 +48,25 @@ fun CreateFoodScreen(
     val imgUri by viewModel.imgUri.collectAsState()
     val priceError by viewModel.priceConvertError
     val context = LocalContext.current
+    val scrollState = rememberScrollState()
 
     if (categories.isNotEmpty()) {
-        val inputLabelFontSize = 16.sp
+        val inputLabelFontSize = 13.sp
         val screenWidth = getScreenWidth()
         val screenHeight = getScreenHeight()
 
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            AbsoluteCircle(150.dp, offsetX = (-200).dp, offsetY = (-230).dp)
-            AbsoluteCircle(50.dp, offsetX = (screenWidth - 80).dp, offsetY = (screenHeight * 0.1).dp, OrangePrimary)
-            AbsoluteCircle(138.dp, offsetX = (-130).dp, offsetY = (screenHeight * 0.2).dp, OrangePrimary)
-            AbsoluteCircle(95.dp, offsetX = (screenWidth * 0.7).dp, offsetY = (screenHeight * 0.35).dp)
-            AbsoluteCircle(100.dp, offsetX = (-30).dp, offsetY = (screenHeight - 100).dp, OrangePrimary)
-            AbsoluteCircle(150.dp, offsetX = (screenWidth - 280).dp, offsetY = (screenHeight * 0.8).dp)
+            AbsoluteCircle(150.dp, offsetX = (-200).dp, offsetY = (-230).dp, modifier = Modifier.scaleInOnShow(delay = 100).bobbing(amplitude = 10f, duration = 2500, delay = 0))
+            AbsoluteCircle(50.dp, offsetX = (screenWidth - 80).dp, offsetY = (screenHeight * 0.1).dp, color = OrangePrimary, modifier = Modifier.scaleInOnShow(delay = 200).bobbing(amplitude = 6f, duration = 1800, delay = 100))
+            AbsoluteCircle(138.dp, offsetX = (-130).dp, offsetY = (screenHeight * 0.2).dp, color = OrangePrimary, modifier = Modifier.scaleInOnShow(delay = 300).bobbing(amplitude = 12f, duration = 2200, delay = 200))
+            AbsoluteCircle(95.dp, offsetX = (screenWidth * 0.7).dp, offsetY = (screenHeight * 0.35).dp, modifier = Modifier.scaleInOnShow(delay = 400).bobbing(amplitude = 8f, duration = 2000, delay = 300))
+            AbsoluteCircle(100.dp, offsetX = (-30).dp, offsetY = (screenHeight - 100).dp, color = OrangePrimary, modifier = Modifier.scaleInOnShow(delay = 500).bobbing(amplitude = 10f, duration = 2400, delay = 400))
+            AbsoluteCircle(150.dp, offsetX = (screenWidth - 280).dp, offsetY = (screenHeight * 0.8).dp, modifier = Modifier.scaleInOnShow(delay = 600).bobbing(amplitude = 14f, duration = 2700, delay = 500))
         }
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
         ) {
             HeaderBar(
                 navController,
@@ -148,14 +153,14 @@ fun CreateFoodScreen(
             )
 
             Row(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxWidth().padding(vertical = 30.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 CommonButton(
                     label = "Save",
                     reversedColor = true,
-                    textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
+                    textStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
                     icon = {
                         Icon(
                             painterResource(R.drawable.icon_angle_right),
@@ -204,8 +209,8 @@ fun CreateFoodScreen(
         ) {
             BlinkedWarning()
             Spacer(Modifier.height(20.dp))
-            Text("You haven't got any categories!", fontSize = 25.sp, fontWeight = FontWeight.Bold, color = OrangePrimary)
-            Text("Please add some categories first!", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = OrangePrimary)
+            Text("You haven't got any categories!", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = OrangePrimary)
+            Text("Please add some categories first!", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = OrangePrimary)
         }
     }
 }

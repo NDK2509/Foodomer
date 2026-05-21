@@ -35,6 +35,7 @@ import com.example.foodomer.utils.thousandGroupByDot
 @Composable
 fun FoodItem(
     food: Food,
+    enjoyedCount: Int,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     onDelete: () -> Unit = {}
@@ -44,7 +45,7 @@ fun FoodItem(
         modifier =
         modifier
             .fillMaxWidth()
-            .height(85.dp)
+            .height(68.dp)
             .clip(RoundedCornerShape(10.dp))
             .background(LightOrange)
                 .combinedClickable(
@@ -68,7 +69,7 @@ fun FoodItem(
             "",
             modifier =
                 Modifier
-                    .width(65.dp)
+                    .width(50.dp)
                     .aspectRatio(1f)
                     .clip(CircleShape)
                     .border(1.dp, OrangePrimary, CircleShape),
@@ -82,7 +83,7 @@ fun FoodItem(
             Text(
                 food.name,
                 color = Color.Black,
-                fontSize = 16.sp,
+                fontSize = 13.sp,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
@@ -90,7 +91,7 @@ fun FoodItem(
             Text(
                 "${food.price.thousandGroupByDot()} đ",
                 color = Color.Red,
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -105,9 +106,9 @@ fun FoodItem(
                 exit = slideOutVertically() + fadeOut()
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically
+                     modifier = Modifier.fillMaxWidth(),
+                     horizontalArrangement = Arrangement.End,
+                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     DeleteButton(onDelete)
                 }
@@ -117,7 +118,8 @@ fun FoodItem(
                 enter = slideInVertically(),
                 exit = slideOutVertically() + fadeOut()
             ) {
-                Text("You have enjoyed 99 times!", color = Color.Black, fontSize = 8.sp, modifier = Modifier.offset(0.dp, 0.dp))
+                val text = if (enjoyedCount == 0) "Never enjoyed yet!" else "You have enjoyed $enjoyedCount times!"
+                Text(text, color = Color.Black, fontSize = 8.sp, modifier = Modifier.offset(0.dp, 0.dp))
             }
         }
     }
@@ -127,13 +129,14 @@ fun FoodItem(
 @Composable
 fun PreviewFoodItem() {
     FoodItem(
-        Food(
+        food = Food(
             0,
             0,
             "Cu ke ngoc",
             9999999,
             "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fvector-images%2Fleek-cute-cartoon.html&psig=AOvVaw3dYypkjOHocO55o--csoLs&ust=1684775648244000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCIjUqMj0hv8CFQAAAAAdAAAAABAD",
             ""
-        )
+        ),
+        enjoyedCount = 99
     )
 }

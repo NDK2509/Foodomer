@@ -1,6 +1,8 @@
 package com.example.foodomer.ui.components.randomizer
 
 import android.net.Uri
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,17 +19,24 @@ import com.example.foodomer.ui.theme.OrangePrimary
 @Preview
 @Composable
 fun FoodImageFrame(
-    uri: String? = ""
+    uri: String? = "",
+    modifier: Modifier = Modifier
 ) {
-    AsyncImage(
-        Uri.parse(uri),
-        "",
-        contentScale = ContentScale.Crop,
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .aspectRatio(1.25f)
-                .clip(RoundedCornerShape(20.dp))
-                .border(3.dp, OrangePrimary, RoundedCornerShape(20.dp))
-    )
+    Crossfade(
+        targetState = uri,
+        animationSpec = tween(durationMillis = 150),
+        modifier = modifier
+            .fillMaxWidth()
+            .aspectRatio(1.25f)
+            .clip(RoundedCornerShape(20.dp))
+            .border(3.dp, OrangePrimary, RoundedCornerShape(20.dp)),
+        label = "foodImageCrossfade"
+    ) { currentUri ->
+        AsyncImage(
+            Uri.parse(currentUri),
+            "",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxWidth().aspectRatio(1.25f)
+        )
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.foodomer.ui.components.randomhistory
 
 import android.net.Uri
+import coil.compose.AsyncImage
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -18,10 +19,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import androidx.compose.ui.text.style.TextOverflow
 import com.example.foodomer.database.entities.Food
 import com.example.foodomer.database.entities.HistoryWithFood
 import com.example.foodomer.ui.theme.OrangePrimary
+import com.example.foodomer.utils.thousandGroupByDot
 import com.example.foodomer.utils.timeOnlyFormatter
 import java.util.*
 
@@ -35,7 +37,7 @@ fun HistoryBlock(
     Column(
         modifier.fillMaxWidth()
     ) {
-        Text(date, color = Color.Black, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        Text(date, color = Color.Black, fontSize = 14.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(10.dp))
         Column(
             Modifier.padding(start = 10.dp)
@@ -51,18 +53,36 @@ fun HistoryElement(
     showDivider: Boolean = false
 ) {
     val time = timeOnlyFormatter.format(Date(history.createdAt))
-    val style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp)
+    val style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 12.sp)
     Row(
-        Modifier.fillMaxWidth().height(90.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly,
+        Modifier.fillMaxWidth().height(70.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.weight(1f)
         ) {
-            Text(time, style = style, modifier = Modifier.width(70.dp))
+            Text(time, style = style, modifier = Modifier.width(60.dp))
             HistoryDivider(showDivider)
+            Spacer(Modifier.width(8.dp))
+            Column {
+                Text(
+                    history.food.name,
+                    color = Color.Black,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    "${history.food.price.thousandGroupByDot()} đ",
+                    color = Color.Gray,
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
         }
         AsyncImage(
             Uri.parse(history.food.img),
@@ -70,10 +90,10 @@ fun HistoryElement(
             contentScale = ContentScale.Crop,
             modifier =
             Modifier
-                .width(80.dp)
+                .width(48.dp)
                 .aspectRatio(1f)
                 .clip(CircleShape)
-                .border(3.dp, OrangePrimary, CircleShape)
+                .border(2.dp, OrangePrimary, CircleShape)
         )
     }
 

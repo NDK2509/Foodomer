@@ -17,7 +17,7 @@ import androidx.navigation.NavController
 import com.example.foodomer.R
 import com.example.foodomer.ui.theme.OrangePrimary
 
-val ICON_SIZE = 40.dp
+val ICON_SIZE = 28.dp
 
 @Composable
 fun HeaderIcon(

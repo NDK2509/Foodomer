@@ -30,6 +30,10 @@ import com.example.foodomer.ui.theme.OrangePrimary
 import com.example.foodomer.ui.viewmodels.CreateCategoryViewModel
 import com.example.foodomer.utils.getScreenHeight
 import com.example.foodomer.utils.getScreenWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import com.example.foodomer.utils.bobbing
+import com.example.foodomer.utils.scaleInOnShow
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
@@ -39,26 +43,29 @@ fun CreateCategoryScreen(
 ) {
     val screenWidth = getScreenWidth()
     val screenHeight = getScreenHeight()
-    val inputLabelFontSize = 16.sp
+    val inputLabelFontSize = 13.sp
     val context = LocalContext.current
     val uiState by viewModel.uiSate.collectAsState()
+    val scrollState = rememberScrollState()
 
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        AbsoluteCircle(145.dp, offsetX = (screenWidth - 145 - 20).dp, offsetY = (-97).dp)
-        AbsoluteCircle(90.dp, offsetX = (-150).dp, offsetY = 75.dp, OrangePrimary)
-        AbsoluteCircle(103.dp, offsetX = (screenWidth - 103).dp, offsetY = (screenHeight * 0.6).dp, OrangePrimary)
-        AbsoluteCircle(153.dp, offsetX = (-134).dp, offsetY = (screenHeight * 0.7).dp)
+        AbsoluteCircle(145.dp, offsetX = (screenWidth - 145 - 20).dp, offsetY = (-97).dp, modifier = Modifier.scaleInOnShow(delay = 100).bobbing(amplitude = 12f, duration = 2400, delay = 0))
+        AbsoluteCircle(90.dp, offsetX = (-150).dp, offsetY = 75.dp, color = OrangePrimary, modifier = Modifier.scaleInOnShow(delay = 200).bobbing(amplitude = 8f, duration = 2000, delay = 100))
+        AbsoluteCircle(103.dp, offsetX = (screenWidth - 103).dp, offsetY = (screenHeight * 0.6).dp, color = OrangePrimary, modifier = Modifier.scaleInOnShow(delay = 300).bobbing(amplitude = 10f, duration = 2200, delay = 200))
+        AbsoluteCircle(153.dp, offsetX = (-134).dp, offsetY = (screenHeight * 0.7).dp, modifier = Modifier.scaleInOnShow(delay = 400).bobbing(amplitude = 14f, duration = 2600, delay = 300))
     }
     Column(
-        Modifier.fillMaxSize()
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
     ) {
         HeaderBar(navController, showBackButton = true)
-        Spacer(Modifier.height((screenHeight*0.15).dp))
+        Spacer(Modifier.height((screenHeight*0.1).dp))
 
         CreateCategoryTitleParagraph()
-        Spacer(Modifier.height((screenHeight*0.1).dp))
+        Spacer(Modifier.height((screenHeight*0.05).dp))
 
         Text("What will the category be called?", color = OrangePrimary, fontSize = inputLabelFontSize, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(10.dp))
@@ -69,7 +76,7 @@ fun CreateCategoryScreen(
                 Text("Type the category name...", color = Color.Gray)
             }
         )
-        Spacer(Modifier.height(50.dp))
+        Spacer(Modifier.height(30.dp))
 
         Text("Some description right there!", color = OrangePrimary, fontSize = inputLabelFontSize, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(10.dp))
@@ -84,11 +91,11 @@ fun CreateCategoryScreen(
         )
 
         Row(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+            modifier = Modifier.fillMaxWidth().padding(vertical = 30.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CommonButton(label = "Save", textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold), icon = {
+            CommonButton(label = "Save", textStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold), icon = {
                 Icon(
                     painterResource(R.drawable.icon_angle_right),
                     "",

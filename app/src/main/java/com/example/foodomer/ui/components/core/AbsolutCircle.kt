@@ -18,11 +18,12 @@ fun AbsoluteCircle(
     radius: Dp,
     offsetX: Dp = 0.dp,
     offsetY: Dp = 0.dp,
-    color: Color = Color.Black
+    color: Color = Color.Black,
+    modifier: Modifier = Modifier
 ) {
     Surface(
         modifier =
-            Modifier
+            modifier
                 .offset(offsetX, offsetY)
                 .width(2 * radius)
                 .aspectRatio(1f)
